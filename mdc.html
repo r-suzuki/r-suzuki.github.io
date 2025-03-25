@@ -564,37 +564,6 @@ class="math inline">\(\phi\)</span>を推定できればよい。これについ
 は探索的データ解析の手法として利用することができ、データ全体の傾向をすみやかに概観することができる。形式的には主成分分析や因子分析にも応用することができ、データの背後にある構造を探るうえで有用である可能性がある。</p>
 <h1 id="結論および今後の方針">結論および今後の方針</h1>
 <p>[1]において開発中の推定手法を適用し、数値シミュレーションや実際のデータ解析の例を用いてその有用性を評価することを予定している。</p>
-<h1 id="補遺">補遺</h1>
-<h2 id="角度の定義に関する議論">角度の定義に関する議論</h2>
-<p>議論の過程で試みた、<span
-class="math inline">\(L^2\)</span>空間における内積に基づく角度の定義について振り返る。離散確率変数の場合、これは以下のようなものだった：
-<span class="math display">\[
-\begin{align*}
-\cos \theta^* &amp;= \frac{\langle q, r\rangle}{\|q\|\|r\|}\\
-&amp;= \frac{\phi}{\sqrt{k_x k_y}}
-\end{align*}
-\]</span> これは<span class="math inline">\(k = k_x =
-k_y\)</span>であれば<span class="math inline">\([1/k,
-1]\)</span>に値をとり、その意味で提案手法における基準化前の角度と類似した特徴を持つ。また分母が<span
-class="math inline">\(\min\{k_x, k_y\}\)</span>ではなく<span
-class="math inline">\(\sqrt{k_x
-k_y}\)</span>という形になっている点も数学的に自然なようにも思われる。</p>
-<p>ただし以下のように考えると、基準化において<span
-class="math inline">\(k = \min\{k_x,
-k_y\}\)</span>を用いたことが適切であることがわかる。もし<span
-class="math inline">\(k&#39; = \sqrt{k_x k_y}\)</span>とすると、<span
-class="math inline">\(\phi &gt;
-k&#39;\)</span>となる場合が生じ得る。この場合、<span
-class="math inline">\(\cos \theta^*\)</span>が<span
-class="math inline">\(1\)</span>を超える場合が出てきてしまい、<span
-class="math inline">\(0 \leq \theta^* \leq
-\pi/2\)</span>の条件が満たされなくなる。</p>
-<p>これは角度の定義としては問題なく、興味深い解釈が可能と思われる。一方で<span
-class="math inline">\(\pi/2\)</span>に対する余角の議論や相関係数の絶対値との関係など、<span
-class="math inline">\(\theta\)</span>が<span class="math inline">\([0,
-\pi/2]\)</span>の範囲にあることで得られる望ましい性質が失われるものと考えられる。</p>
-<p>以上のことから、<span
-class="math inline">\(L^2\)</span>空間における議論は動機付けとしては役立ったものの、指標の定義としては提案手法の通りとした。</p>
 <h1 id="参考文献">参考文献</h1>
 <p>[1] R. Suzuki (2025). A generalization of correlation coefficient.
 preprint. <a href="https://r-suzuki.github.io/preprints"
