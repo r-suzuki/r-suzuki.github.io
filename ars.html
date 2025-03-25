@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Ryota Suzuki (Ef-prime, Inc.) suzuki@ef-prime.com" />
+  <title>Correcting prediction bias of statistical models with artificial response shift</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <script
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js"
+  type="text/javascript"></script>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Correcting prediction bias of statistical models with
+artificial response shift</h1>
+<p class="author">Ryota Suzuki (Ef-prime, Inc.) suzuki@ef-prime.com</p>
+<p class="date">First published on March 25, 2025</p>
+</header>
+<h1 id="abstract">Abstract</h1>
+<p>This paper first focuses on the maximum likelihood estimation of
+conditional likelihood for predictive models, and shows its potential to
+improve prediction.</p>
+<p>A weighted estimation method is proposed based on the marginal
+distribution, and then extended for optimization with respect to
+predictive accuracy.</p>
+<p>Applications in practical data analysis are discussed, with its
+relationship with existing methods. Finally, its potential applications
+to general machine learning models are also discussed.</p>
+<p><strong>Note that this is a preliminary draft subject to corrections,
+as well as modifications to the definitions of terminology as further
+progress is made. The latest version is available at <a
+href="https://github.com/r-suzuki/preprints"
+class="uri">https://github.com/r-suzuki/preprints</a>.</strong></p>
+<h1 id="概要">概要</h1>
+<p>本稿はまず条件付き尤度による予測モデルの最尤推定に着目し、予測の観点から改善できる可能性を示す。</p>
+<p>データの周辺分布に基づいた重み付き推定法を提案し、これを予測精度の観点から最適化できるよう拡張する。</p>
+<p>実際のデータ解析における利用や、関連手法との関連を明らかにする。最後に一般の機械学習モデルへの応用についても触れる。</p>
+<p><strong>なお本稿は草稿段階であり、今後の進捗に応じて誤りの訂正、用語の変更などが生じる可能性があることに注意されたい。最新版は以下にて公開されている：<a
+href="https://github.com/r-suzuki/preprints"
+class="uri">https://github.com/r-suzuki/preprints</a></strong></p>
+<h1 id="準備">準備</h1>
+<p><span class="math inline">\(s\)</span>個の説明変数<span
+class="math inline">\(x_1, \cdots, x_s\)</span>から<span
+class="math inline">\(t\)</span>個の目的変数<span
+class="math inline">\(y_1, \cdots,
+y_t\)</span>を予測する問題を考える。すなわち自然数<span
+class="math inline">\(s,t\geq1\)</span>に対して、以下のような確率変数の組（tuple）を考える：
+<span class="math display">\[
+\begin{align*}
+\mathbf{x} &amp;= (x_1, \cdots, x_s)\\
+\mathbf{y} &amp;= (y_1, \cdots, y_t)
+\end{align*}
+\]</span> これらが従う同時分布を<span
+class="math inline">\(f(\mathbf{x},\mathbf{y})\)</span>、周辺分布を<span
+class="math inline">\(f(\mathbf{x}),f(\mathbf{y})\)</span>とする。これらは周辺確率が正となる集合のみで定義されるものとし、条件付き分布は以下のように表す：
+<span class="math display">\[
+f(\mathbf{y}|\mathbf{x}) =
+\frac{f(\mathbf{x},\mathbf{y})}{f(\mathbf{x})}
+\]</span> サンプルサイズ<span
+class="math inline">\(N\)</span>の観測データを<span
+class="math inline">\(\mathbf{x}_i, \mathbf{y}_i (i = 1, \cdots,
+N)\)</span>と書くことにする。これらをまとめた観測データ全体は <span
+class="math display">\[
+\begin{align*}
+\mathbf{X} &amp;= (\mathbf{x}_1, \cdots, \mathbf{x}_N)\\
+\mathbf{Y} &amp;= (\mathbf{y}_1, \cdots, \mathbf{y}_N)
+\end{align*}
+\]</span>
+によって表す。通常これらは行列として表現されるが、本稿においては単に組として取り扱うことで足りる。</p>
+<p>以下の議論は原則として<span
+class="math inline">\(x_j,y_k\)</span>が連続または離散（あるいはその混合）のいずれも対象とするが、記法の簡便のため基本的には連続確率変数を想定して記述する。特に離散確率変数であることを明示する場合、密度関数<span
+class="math inline">\(f\)</span>を確率関数<span
+class="math inline">\(p\)</span>に置き換えて表す。</p>
+<h1 id="同時分布に関する最尤法">同時分布に関する最尤法</h1>
+<p><span
+class="math inline">\(f(\mathbf{x},\mathbf{y})\)</span>をモデル化した<span
+class="math inline">\(g_\theta(\mathbf{x},\mathbf{y})\)</span>を推定することを考える。ここで<span
+class="math inline">\(\theta\)</span>はモデルのパラメータを表すベクトルで、条件付き確率との混同を防ぐため添字で表した。</p>
+<p>同時分布に関する最尤法は、尤度<span
+class="math inline">\(g_\theta(\mathbf{x},\mathbf{y})\)</span>を<span
+class="math inline">\(f(\mathbf{x},\mathbf{y})\)</span>に従う観測データのもとで最大化する。すなわちサンプルサイズ<span
+class="math inline">\(N\)</span>の観測データに対して、同時尤度 <span
+class="math display">\[
+\prod_{i=1}^N g_\theta(\mathbf{x}_i,\mathbf{y}_i)
+\]</span> を対数変換した対数尤度 <span class="math display">\[
+\sum_{i=1}^N \log g_\theta(\mathbf{x}_i,\mathbf{y}_i)
+\]</span> を最大化する。サンプルサイズ<span
+class="math inline">\(N\)</span>で割れば <span class="math display">\[
+\frac{1}{N}\sum_{i=1}^N \log g_\theta(\mathbf{x}_i,\mathbf{y}_i)
+\]</span> と書くことができ、これは母集団における対数尤度の期待値 <span
+class="math display">\[
+E \bigg( \log g_\theta(\mathbf{x},\mathbf{y}) \bigg)
+\]</span>
+についての、経験分布におけるプラグイン推定量と解釈することができる。したがって結果的に、母集団における尤度の期待値
+<span class="math display">\[
+E \bigg( g_\theta(\mathbf{x},\mathbf{y}) \bigg)
+\]</span>
+についての最大化を、経験分布におけるプラグイン推定量を介して行なっているものと理解することができる。</p>
+<p>以下、これを <strong>同時尤度に関する最尤法</strong> と呼ぶ。</p>
+<h1 id="条件付き尤度に関する最尤法">条件付き尤度に関する最尤法</h1>
+<p>一方で予測モデルの推定においては、条件付き尤度<span
+class="math inline">\(g_\theta(\mathbf{y}|\mathbf{x})\)</span>の最大化がよく行われる。このとき、理論上は説明変数<span
+class="math inline">\(\mathbf{x}\)</span>が確率変数ではないものと仮定されることが多いが、ここでは仮定に反して同時分布に従うデータが存在する状況を想定する。</p>
+<p>いま <span class="math display">\[
+E \bigg( f(\mathbf{x},\mathbf{y}) \bigg)
+= E \bigg( f(\mathbf{y}|\mathbf{x})f(\mathbf{x}) \bigg)
+\]</span>
+と書けることから、モデルについても同時尤度を条件付き分布と周辺分布の積として表現することを考える。</p>
+<p>このとき同時尤度モデル<span
+class="math inline">\(g_h\)</span>に関する最尤法は <span
+class="math display">\[
+E \bigg( g_h(\mathbf{x},\mathbf{y}) \bigg)
+= E \bigg( g_\theta(\mathbf{y}|\mathbf{x})h_\eta(\mathbf{x}) \bigg)
+\]</span> のように表すことができる。すなわち条件付き分布<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>と周辺分布<span
+class="math inline">\(f(\mathbf{x})\)</span>それぞれをモデル<span
+class="math inline">\(g,h\)</span>で置き換え、その積として得られる合成モデルについて同時尤度を最大化しているものとみなす。ここで<span
+class="math inline">\(\theta, \eta\)</span>はそれぞれ<span
+class="math inline">\(g,h\)</span>のパラメータである。</p>
+<p>この観点から、条件付き尤度の最大化は<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>をモデル<span
+class="math inline">\(g_\theta(\mathbf{y}|\mathbf{x})\)</span>で置き換え、また<span
+class="math inline">\(f(\mathbf{x})\)</span>をベイズ法における無情報事前分布に相当する
+<strong>平坦分布（flat distribution）</strong> <span
+class="math display">\[
+f^*(\mathbf{x}) \propto 1
+\]</span> で置き換えた <span class="math display">\[
+E \bigg( g_\theta(\mathbf{y}|\mathbf{x})f^*(\mathbf{x}) \bigg)
+= E \bigg( g_\theta(\mathbf{y}|\mathbf{x}) \bigg)
+\]</span>
+について最大化を試みているものと解釈することができる。尤度の定義に周辺分布<span
+class="math inline">\(f(\mathbf{x})\)</span>に関する項が含まれないことから、同時分布<span
+class="math inline">\(f(\mathbf{x},\mathbf{y})\)</span>のもとでの真の条件付き分布<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>の推定としてはバイアスが生じるものと考えられる。</p>
+<p>実際、真の同時分布のもとで対数尤度を評価すれば、 <span
+class="math display">\[
+\begin{align*}
+\log \bigg( f(\mathbf{x},\mathbf{y}) \bigg)
+&amp;= \log \bigg( f(\mathbf{y}|\mathbf{x})f(\mathbf{x}) \bigg) \\
+&amp;= \log f(\mathbf{y}|\mathbf{x}) + \log f(\mathbf{x})
+\end{align*}
+\]</span> であり、周辺分布<span
+class="math inline">\(f(\mathbf{x})\)</span>が大きい領域の観測においては本来「対数尤度が加算される」形になる。仮にモデル<span
+class="math inline">\(g_\theta(\mathbf{y}|\mathbf{x})\)</span>が真の条件付き分布<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>と一致した場合においても、この加算分がないため<span
+class="math inline">\(\mathbf{x}\)</span>が高密度な領域で過小評価が起こり、逆に低密度な領域で過大評価が起こる。これによって推定されたモデル<span
+class="math inline">\(\hat{g}_\theta(\mathbf{y}|\mathbf{x})\)</span>はバイアスを含むものになるという見立てである。</p>
+<p>仮に周辺分布<span
+class="math inline">\(f(\mathbf{x})\)</span>が既知であれば、条件付き尤度に対して
+<span class="math display">\[E \bigg( f(\mathbf{x})
+g_\theta(\mathbf{y}|\mathbf{x}) \bigg)\]</span>
+という形での最大化を行うことが望ましいと考えられる。ここで<span
+class="math inline">\(f(\mathbf{x})\)</span>を重みとして捉えれば、これは<strong>共変量シフト（covariate
+shift）</strong>[1][2]の文脈で理解することができる。</p>
+<p>共変量シフトにおいては、説明変数の周辺分布についてモデル学習時を<span
+class="math inline">\(f_0(\mathbf{x})\)</span>、予測時を<span
+class="math inline">\(f_1(\mathbf{x})\)</span>としたとき、対数尤度に対して重み
+<span class="math display">\[
+\frac{f_1(\mathbf{x})}{f_0(\mathbf{x})}
+\]</span> を与える。本稿では通常の最尤法において重み<span
+class="math inline">\(f_0(\mathbf{x}) \propto
+1\)</span>が与えられているところ、本来必要な重み<span
+class="math inline">\(f_1(\mathbf{x}) =
+f(\mathbf{x})\)</span>を与えるという位置付けとなっている。</p>
+<p>ただし多くの場合<span
+class="math inline">\(f(\mathbf{x})\)</span>は未知であり、上記を実行するためにはデータから推定する必要がある。また一般に<span
+class="math inline">\(\mathbf{x}\)</span>は高次元であるうえに、変数選択を伴う場合はアルゴリズムのステップごとに推定し直す必要が生じる。</p>
+<p>こういった事情から、周辺分布<span
+class="math inline">\(f(\mathbf{x})\)</span>を直接推定することは多くの場合において困難である。これを克服するため、別方向からのアプローチを試みる。</p>
+<h1 id="関連性スコア">関連性スコア</h1>
+<p>以降においては、[4]において提案された <strong>関連性スコア</strong>
+を用いたアプローチを試みる。これは確率変数間の関連の強さを測るための指標であるが、その定義から多変数への拡張や、確率分布をモデルに置き換えることによるモデルの評価にも応用できるものと考えられる。</p>
+<p>関連性スコアは以下で定義される： <span class="math display">\[
+\phi = E \bigg( \frac{f(x,y)}{f(x)f(y)} \bigg)
+\]</span> これを多次元に拡張する。すなわち確率変数の組<span
+class="math inline">\(\mathbf{x} = (x_1, \cdots, x_s), \mathbf{y} =
+(y_1, \cdots, y_t)\)</span>について、<span
+class="math inline">\(\mathbf{x}\)</span>と<span
+class="math inline">\(\mathbf{y}\)</span>の関係を評価する指標を以下のように定義する：
+<span class="math display">\[
+\phi =
+E\bigg(\frac{f(\mathbf{x},\mathbf{y})}{f(\mathbf{x})f(\mathbf{y})}\bigg)
+\]</span> この拡張は<span class="math inline">\(\mathbf{x},
+\mathbf{y}\)</span>がそれぞれ単一の変数である場合を含む。以降、この拡張された定義を用いて議論する。</p>
+<p>ここで<span class="math inline">\(\phi\)</span>について <span
+class="math display">\[
+\phi =
+E\bigg(\frac{f(\mathbf{x},\mathbf{y})}{f(\mathbf{x})f(\mathbf{y})}\bigg)
+= E\bigg(\frac{f(\mathbf{y}|\mathbf{x})}{f(\mathbf{y})}\bigg)
+\]</span>
+とも書けることからわかるように、関連性スコアは条件付き確率<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>が周辺分布<span
+class="math inline">\(f(\mathbf{y})\)</span>を平均的に上回るとき大きな値をとる。次節ではこれをモデルの推定および選択の観点から利用することを考える。</p>
+<h1 id="関連性スコアと予測モデル">関連性スコアと予測モデル</h1>
+<p>あらためて予測モデルの推定について議論する。モデル<span
+class="math inline">\(g_\theta\)</span>を用いて説明変数<span
+class="math inline">\(\mathbf{x}\)</span>から目的変数<span
+class="math inline">\(\mathbf{y}\)</span>を予測するものとする。モデルのパラメータ<span
+class="math inline">\(\theta\)</span>を調整することで、与えられた説明変数のもとでモデルの関数形を最適化することを目指す。</p>
+<p>前述の通り、予測モデルの推定においては条件付き尤度のモデル<span
+class="math inline">\(g_\theta(\mathbf{y}|\mathbf{x})\)</span>に関する最尤法がよく使われる。ここで
+<span class="math display">\[
+\phi = E \bigg( \frac{f(\mathbf{y}|\mathbf{x})}{f(\mathbf{y})} \bigg)
+\]</span> であることから、条件付き分布<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>をモデル<span
+class="math inline">\(g_\theta(\mathbf{y}|\mathbf{x})\)</span>で置き換えた
+<span class="math display">\[
+\phi_g = E \bigg( \frac{g_\theta(\mathbf{y}|\mathbf{x})}{f(\mathbf{y})}
+\bigg)
+\]</span> を考える。ここで条件付き分布のモデル<span
+class="math inline">\(g_\theta(\mathbf{y}|\mathbf{x})\)</span>が真の条件付き分布<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>に一致するとき関連性スコアの最大化が達成され、最適な予測が得られるものと期待して議論を進める（これについては追って再考する）。</p>
+<p>いま <span class="math display">\[
+\phi_g = E \bigg( \frac{g_\theta(\mathbf{y}|\mathbf{x})}{f(\mathbf{y})}
+\bigg) = E \bigg( f(\mathbf{y})^{-1}g_\theta(\mathbf{y}|\mathbf{x})
+\bigg)
+\]</span> と書き直せば、これは<span
+class="math inline">\(f(\mathbf{y})^{-1}\)</span>による重み付き尤度の期待値と捉えることができる。観測データ<span
+class="math inline">\(\mathbf{X} = (\mathbf{x}_1, \cdots, \mathbf{x}_N),
+\mathbf{Y} = (\mathbf{y}_1, \cdots
+\mathbf{y}_N)\)</span>のもとでの重み付き同時対数尤度を考えると、 <span
+class="math display">\[
+\begin{align*}
+\log \bigg( f(\mathbf{Y})^{-1} g_\theta(\mathbf{Y}|\mathbf{X})
+\bigg)&amp;=
+\log \Bigg(\prod_{i=1}^N f(\mathbf{y}_i)^{-1}
+g_\theta(\mathbf{y}_i|\mathbf{x}_i) \Bigg) \\
+&amp;= \sum_{i=1}^N\log \bigg( f(\mathbf{y}_i)^{-1}
+g_\theta(\mathbf{y}_i|\mathbf{x}_i) \bigg) \\
+\end{align*}
+\]</span>
+と書ける。したがって関連性スコアの最大化は、周辺尤度の逆数<span
+class="math inline">\(f(\mathbf{y}_i)^{-1}\)</span>による重み付き尤度の最大化問題に帰着する。</p>
+<h2 id="重み付き最尤法の解釈">重み付き最尤法の解釈</h2>
+<p>上記の通り、関連性スコアの最大化という観点から重み付き最尤法が導出された。推定手法の話題に進む前に、この方法の理論的な位置付けについて考察しておきたい。</p>
+<p>条件付き尤度による通常の最尤法は、周辺分布を除いた <span
+class="math display">\[
+E \big( g_\theta(\mathbf{y}|\mathbf{x}) \big)
+\]</span>
+を最大化することに相当する。これをベイズ法で用いられる無情報事前分布（平坦分布）
+<span class="math display">\[
+f^*(y) \propto 1
+\]</span> を用いて <span class="math display">\[
+E \big( g_\theta(\mathbf{y}|\mathbf{x}) \big) = E \bigg(
+f^*(\mathbf{y})^{-1}g_\theta(\mathbf{y}|\mathbf{x}) \bigg)
+\]</span> と書き直せば、これは前述の重み付き最尤法において重みを<span
+class="math inline">\(1\)</span>に固定したものとみなすことができる。</p>
+<p>ゆえに議論を逆に辿れば、条件付き尤度に関する最尤法は <span
+class="math display">\[
+\phi_g^* = E \bigg(
+\frac{g_\theta(\mathbf{y}|\mathbf{x})}{f^*(\mathbf{y})} \bigg)\]</span>
+という形の関連性スコアの最大化として解釈することができる。すなわち、真の周辺分布<span
+class="math inline">\(f(\mathbf{y})\)</span>のモデルとして平坦分布<span
+class="math inline">\(f^*(y) \propto
+1\)</span>を用いていることに相当する。</p>
+<p>この観点からみれば、通常の条件付き尤度を用いた最尤法においては<span
+class="math inline">\(f(\mathbf{y})\)</span>が大きい観測の重みが過大評価され、<span
+class="math inline">\(f(\mathbf{y})\)</span>が小さい観測の重みが過小評価されると考えられる。</p>
+<p>一方で関連性スコア <span class="math display">\[
+\phi_g = E \bigg( \frac{g_\theta(\mathbf{y}|\mathbf{x})}{f(\mathbf{y})}
+\bigg) = E \bigg( f(\mathbf{y})^{-1}g_\theta(\mathbf{y}|\mathbf{x})
+\bigg)
+\]</span> を最大化して得られた<span
+class="math inline">\(g_\theta\)</span>は<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>のモデルとしてはバイアスを含んだものになる。目的変数の周辺分布が平坦分布になるようにパラメータを推定しているため、予測分布の周辺分布もまた平坦分布になってしまう。すなわち
+<span class="math display">\[
+\begin{align*}
+g_\theta(\mathbf{y}) &amp;= \int_x
+g_\theta(\mathbf{y}|\mathbf{x})f(\mathbf{x}) dx \\
+&amp;\propto 1
+\end{align*}
+\]</span> という状況である。</p>
+<p>共変量シフトとの関連でいえば、これは <strong>応答変量シフト（response
+shift）</strong> と呼ぶことができる。この方法で推定されたモデル<span
+class="math inline">\(\hat{g}_\theta(\mathbf{y}|\mathbf{x})\)</span>は真の条件付き分布<span
+class="math inline">\(f(\mathbf{y}|\mathbf{x})\)</span>からシフトしており、目的変数の周辺分布が平坦分布<span
+class="math inline">\(f^*(\mathbf{y})\)</span>になるとき最適なモデルとなってしまう。</p>
+<p>したがって、予測の場面においては予測分布として<span
+class="math inline">\(\hat{g}_\theta\)</span>そのものではなく、周辺尤度<span
+class="math inline">\(f(\mathbf{y})\)</span>を掛け合わせて正規化定数<span
+class="math inline">\(C\)</span>で基準化した <span
+class="math display">\[
+\hat{f}_g(\mathbf{y}|\mathbf{x}) = C^{-1} f(\mathbf{y})
+\hat{g}_\theta(\mathbf{y}|\mathbf{x})
+\]</span> を用いるのが適切と考えられる。<span
+class="math inline">\(C\)</span>を求めるには積分 <span
+class="math display">\[
+\int_y f(\mathbf{y}) \hat{g}_\theta(\mathbf{y}|\mathbf{x}) dy
+\]</span> の評価が必要だが、例えば予測対象が2値変数<span
+class="math inline">\(y\)</span>である場合、<span
+class="math inline">\(f(y=1) = p, \hat{g}_\theta(y=1|\mathbf{x}) =
+q\)</span>とおけば <span class="math display">\[
+C = pq + (1-p)(1-q)
+\]</span> によって容易に求まる。</p>
+<h3 id="補足情報量に基づく解釈">補足：情報量に基づく解釈</h3>
+<p>重み付き同時対数尤度の式において、真の同時分布<span
+class="math inline">\(f(\mathbf{X},\mathbf{Y})\)</span>について期待値をとれば
+<span class="math display">\[
+\begin{align*}
+E\Bigg(\log \frac{g_\theta(\mathbf{Y}|\mathbf{X})}{f(\mathbf{Y})}\Bigg)
+&amp;= E\Bigg[\sum_{i=1}^N\log \bigg( f(\mathbf{y}_i)^{-1}
+g_\theta(\mathbf{y}_i|\mathbf{x}_i) \bigg) \Bigg]\\
+\end{align*}
+\]</span> が得られる。これは真の分布<span
+class="math inline">\(f(\mathbf{X},\mathbf{Y})\)</span>のもとで測ったモデル<span
+class="math inline">\(g_\theta(\mathbf{Y}|\mathbf{X})\)</span>と真の周辺分布<span
+class="math inline">\(f(\mathbf{Y})\)</span>のKullback-Leibler情報量に相当し、また真の同時分布のもとで
+<span class="math display">\[
+E\Bigg(\log \frac{f(\mathbf{Y}|\mathbf{X})}{f(\mathbf{Y})}\Bigg) =
+E\Bigg(\log
+\frac{f(\mathbf{X},\mathbf{Y})}{f(\mathbf{X})f(\mathbf{Y})}\Bigg)
+\]</span> であることから、モデル<span
+class="math inline">\(g\)</span>のもとでの相互情報量の最大化とも理解できる。</p>
+<p>この意味でも、関連性スコアによるモデル選択は、条件付き分布のモデルを周辺分布から遠ざけるものと理解することができる。関連性スコアの定義から、これが最適な予測を実現する方向であることも期待される。</p>
+<p>なお参考までに、ここで再びモデルのもとでの <span
+class="math display">\[\phi_g = E \bigg(
+\frac{g_\theta(\mathbf{y}|\mathbf{x})}{f(\mathbf{y})} \bigg)\]</span>
+を眺めると、これは尤度比の期待値にあたる形をしている。モデルの尤度比検定において、分母に定数項のみからなる単純なモデル<span
+class="math inline">\(g_0(\mathbf{y})\)</span>を用いることが多いが、実際の周辺分布<span
+class="math inline">\(f(\mathbf{y})\)</span>はより複雑な形状をしていることが多い。そのような周辺分布に関する情報を与えることで、モデルの予測を改善できる可能性が示唆されているものと捉えられる。</p>
+<h1 id="逆周辺重み付き最尤法">逆周辺重み付き最尤法</h1>
+<p>以上より同時分布における最尤法の観点からは<span
+class="math inline">\(f(\mathbf{x})\)</span>、関連性スコアおよびKullback-Leibler情報量最大化の観点からは<span
+class="math inline">\(f(\mathbf{y})^{-1}\)</span>を最尤法における重みとして用いることで、同時分布<span
+class="math inline">\(f(\mathbf{x},
+\mathbf{y})\)</span>における予測を改善できる可能性が示唆された。</p>
+<p>前述のとおり説明変数<span
+class="math inline">\(\mathbf{x}\)</span>は高次元である場合が多く、周辺分布の推定は一般に困難であることが多い。一方で目的変数<span
+class="math inline">\(\mathbf{y}\)</span>については1次元である場合が多く、相対度数やヒストグラム、カーネル密度推定などによって比較的容易に推定することができる。</p>
+<p>そこで周辺分布<span
+class="math inline">\(f(\mathbf{y})\)</span>をモデル<span
+class="math inline">\(h_\eta(\mathbf{y})\)</span>で置き換えて、推定値の逆数<span
+class="math inline">\(\hat{h}_\eta(\mathbf{y})^{-1}\)</span>を重みとして最尤法を行うことを考える。ここで<span
+class="math inline">\(\eta\)</span>は周辺分布モデルのパラメータベクトルを表す。</p>
+<p>これによって得られた重み付き平均対数尤度は以下で表される： <span
+class="math display">\[
+\begin{align*}
+\hat{\ell}_h &amp;= \frac{1}{N} \Bigg[ \sum_{i=1}^N\log \bigg(
+\hat{h}_\eta(\mathbf{y}_i)^{-1} g_\theta(\mathbf{y}_i|\mathbf{x}_i)
+\bigg) \Bigg]\\
+\end{align*}
+\]</span>
+これは共変量シフトの状況において用いられる重み付き最尤法の形をしている。本稿ではこれを特に
+<strong>逆周辺重み付き（inverse marginal weighting; IMW）最尤法</strong>
+と呼ぶことにする。</p>
+<p>前に注意した通り、ここで推定されたモデル<span
+class="math inline">\(\hat{g}_\theta\)</span>を用いて予測を行う場合、推定に用いた周辺分布のモデル<span
+class="math inline">\(\hat{h}\)</span>を用いて <span
+class="math display">\[
+\hat{f}_{gh}(\mathbf{y}|\mathbf{x})  \propto \hat{h}(\mathbf{y})
+\hat{g}_\theta (\mathbf{y}|\mathbf{x})
+\]</span>
+となるように正規化定数を求める必要がある。すなわち人工的に応答変量シフトを起こすことで変数間の関係を偏りなく抽出し、予測時に逆シフトを適用することで補正された予測値を得るものである。</p>
+<p>したがって採用するモデル<span
+class="math inline">\(g_\theta,h_\eta\)</span>の選定にあたっては、この点を考慮する必要がある。</p>
+<h1 id="適応的アルゴリズム">適応的アルゴリズム</h1>
+<p>逆周辺重み付き最尤法を用いることで、関連性スコアおよびKullback-Leibler情報量最大化の観点から予測モデルを推定することができる。一方で過剰適合とのトレードオフを考慮すると、重みを用いない通常の最尤法は目的変数の分布に左右されず、むしろ安定した予測が得られる可能性も考えられる。</p>
+<p>加えて、既に指摘したようにモデル<span
+class="math inline">\(g\)</span>の探索空間に真の分布<span
+class="math inline">\(f\)</span>が含まれない場合、上記の単純化された理論が当てはまらないことも考えられる。</p>
+<p>これを踏まえて、以下に <strong>適応的逆周辺重み付き（adaptive inverse
+marginal weighting; aIMW）</strong>
+最尤法を提案する。指数パラメータ<span
+class="math inline">\(\lambda\)</span>を用いて、条件付き尤度の最尤法における重みを
+<span class="math display">\[\hat{h}
+w_\lambda(\mathbf{y}_i) = \hat{h}_\eta(\mathbf{y}_i)^{-\lambda}
+\]</span> の形で調整するような重み関数<span
+class="math inline">\(w_\lambda\)</span>を作成する。</p>
+<p>これもまた共変量シフトの状況で用いられる適応的重み付き最尤法に相当し、重みとして<span
+class="math inline">\(f(\mathbf{y})^{-1}\)</span>を採用したものに過ぎない。ただし、以下に述べるようにパラメータ<span
+class="math inline">\(\lambda\)</span>の取りうる値を<span
+class="math inline">\([0,1]\)</span>より広くとることを提案する。</p>
+<p>まず基本的には<span class="math inline">\(0 \leq \lambda \leq
+1\)</span>を考え、<span
+class="math inline">\(\lambda=0\)</span>のとき通常の意味での条件付き尤度の最尤法、<span
+class="math inline">\(\lambda=1\)</span>のとき関連性スコアの最大化に相当する。</p>
+<p><span class="math inline">\(\lambda &gt;
+1\)</span>とすると過剰適合のおそれはあるが、稀な観測が「ブーストされた」推定となる。目的変数の分布が極端に不均衡な場合など、稀なケースに大きい重みを与えることで予測が改善される可能性がある。</p>
+<p>逆に、<span class="math inline">\(\lambda &lt;
+0\)</span>として稀なケースの重みを下げる「逆ブースト」も検討の価値があると思われる。例えば特定の稀な<span
+class="math inline">\(\mathbf{y}\)</span>の値が<span
+class="math inline">\(\mathbf{x}\)</span>における外れ値と強く関連しており、その値が実用上において重要性が低いため無視しても構わない、といった場合が考えられる。</p>
+<p>パラメータ<span
+class="math inline">\(\lambda\)</span>の選択においてはクロスバリデーションなどを適用し、実用上の評価基準において最も性能が高くなる値を求める。ここで重みが周辺分布<span
+class="math inline">\(f(\mathbf{y})\)</span>を置き換える効果をもつことから、これは最適な予測を与えるように事前分布を調整することに相当し、広い意味での経験ベイズ法とも捉えられる。</p>
+<h1 id="データ解析における利用">データ解析における利用</h1>
+<p>提案手法は一般化線形モデルを始め、条件付き尤度を用いるさまざまな手法に対して適用可能と考えられる。特にロジスティック回帰による二値変数の予測など、<span
+class="math inline">\(\mathbf{y}\)</span>がカテゴリ値のときは単に相対度数をもって<span
+class="math inline">\(\hat{h}(\mathbf{y})\)</span>とすることができ、正規化定数も容易に計算できる。</p>
+<p>最尤法以外の機械学習モデルについても、予測分布を出力し、重み付き推定が可能なものについては提案手法を適用することが可能とみられる。本稿で議論したような意味での最適性は得られない可能性があるが、パラメータ調整により予測性能を改善できる可能性が考えられる。</p>
+<h1 id="関連手法">関連手法</h1>
+<p>関連する手法として、機械学習において不均衡データに対して適用される「バランスサンプリング」が挙げられる[3]。</p>
+<p>例えば<span class="math inline">\(y \in
+\{0,1\}\)</span>の予測において、サンプルサイズが<span
+class="math inline">\(0:1 =
+90\%:10\%\)</span>のように偏っているとき、比率が<span
+class="math inline">\(50\%:50\%\)</span>になるよう<span
+class="math inline">\(y=0\)</span>となるデータを取り除いたり（アンダーサンプリング）、逆に<span
+class="math inline">\(y=1\)</span>となるデータを復元抽出して増加させたり（オーバーサンプリング）といったことが行われる。</p>
+<p>アンダーサンプリングは学習に用いるサンプルサイズを減少させることにより、本来であれば実現可能な予測精度が達成さないおそれがある。オーバーサンプリングにはその危険性はないものの、計算時のサンプルサイズが大幅に増加するため、記憶領域の圧迫や計算の低速化を招く可能性がある。また同一のデータが複数回現れることで、望ましくない過剰適合が起こる危険性も考えられる。そしていずれの方法についても、本稿で示した「応答変量シフト」が起こっており、予測分布が真の分布と大きく異なることに注意が必要である。</p>
+<p>本稿における議論はバランスサンプリングに一定の理論的裏付けを与えるとともに、逆周辺重み付き最尤法によって上記の問題を回避し、効率的に計算を行うことを可能にする。また適応的逆周辺重み法では重みの付け方を柔軟に調整することができ、データの特性や実用上の評価基準に沿ったモデル推定が可能となる。</p>
+<h1 id="今後の課題">今後の課題</h1>
+<p>本稿は基本概念に関する議論に終始し、理論的な掘り下げや数値実験の実施などは今後の課題である。具体的な課題は多くあるものと考えられ、以下に例を示す：</p>
+<ul>
+<li>予測の際に用いる正規化定数の計算を考慮した、より一般的な状況に対応するためのモデルの選定方法</li>
+<li>重み付き推定の結果が一致性を持つか、といった統計的性質。手法の設計思想としては同時分布モデルの最尤法に相当することを意図しているが、詳細な議論が必要とみられる</li>
+</ul>
+<p>引き続き考察および数値実験などを進めていきたい。</p>
+<h1 id="参考文献">参考文献</h1>
+<p>[1] H. Shimodaira (2000). Improving predictive inference under
+covariate shift by weighting the log-likelihood function. Journal of
+Statistical Planning and Inference, 90(2):227–244.</p>
+<p>[2] 杉山 将(2006). 共変量シフト下での教師付き学習.
+日本神経回路学会誌, 13(3):111-118.</p>
+<p>[3] Han, J., Kamber, M., &amp; Pei, J. (2011). Data mining: Concepts
+and Techniques (3rd ed.). Morgan Kaufmann Publishers.</p>
+<p>[4] R. Suzuki (2025). A generalization of correlation coeﬃcient.
+preprint. <a href="https://r-suzuki.github.io/preprints"
+class="uri">https://r-suzuki.github.io/preprints</a>.</p>
+</body>
+</html>

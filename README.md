@@ -3,7 +3,8 @@ Preprints and short notes on ongoing studies.
 > Final results will be updated upon completion.
 
 1. [A generalization of correlation coefficient](agcc.html)
-2. [Measuring distance and correlation between random variables of any type](https://r-suzuki.github.io/preprints/mdc.html)
+2. [Measuring distance and correlation between random variables of any type](mdc.html)
+3. [Correcting prediction bias of statistical models with artificial response shift](ars.html)
 
 ---
 Ryota Suzuki (Ef-prime, Inc.)\
