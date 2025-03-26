@@ -4,6 +4,9 @@ Preprints and short notes on ongoing studies.
 
 - [A generalization of correlation coefficient](agcc.html)
 
+\
+[LICENSE](LICENSE.txt)
+
 ---
 Ryota Suzuki (Ef-prime, Inc.)\
 suzuki@ef-prime.com
