@@ -175,8 +175,9 @@
 <header id="title-block-header">
 <h1 class="title">A generalization of correlation coefficient</h1>
 <p class="author">Ryota Suzuki (Ef-prime, Inc.) suzuki@ef-prime.com</p>
-<p class="date">First published on March 25, 2025</p>
+<p class="date">March 28, 2025 *</p>
 </header>
+<p>*First draft published on March 25, 2025</p>
 <h1 id="abstract">Abstract</h1>
 <p>This paper proposes a generalization of the correlation coefficient,
 from the perspective of prediction.</p>
@@ -216,8 +217,8 @@ class="math inline">\(p(x,y)\)</span>、周辺確率関数を<span
 class="math inline">\(p(x),p(y)\)</span>で表す。連続の場合と同様に、周辺確率が正となる集合のみを考える。</p>
 <h1 id="関連性の評価">関連性の評価</h1>
 <p><span class="math inline">\(x\)</span>と<span
-class="math inline">\(y\)</span>の <strong>関連性スコア（association
-score）</strong> を以下で定義する： <span class="math display">\[
+class="math inline">\(y\)</span>の <strong>相互依存度（mutual
+dependency）</strong> を以下で定義する： <span class="math display">\[
 \phi = E \bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)
 \]</span> ここで<span class="math inline">\(1 \leq \phi \leq
 \infty\)</span>であり（<a href="#app:proof1">証明</a>）、<span
@@ -226,7 +227,7 @@ class="math inline">\(y\)</span>が独立のとき最小値<span
 class="math inline">\(1\)</span>をとる。</p>
 <p>逆数をとると<span class="math inline">\(0 \leq \phi^{-1} \leq
 1\)</span>となり、確率変数間の近さを測る一種の非類似度といえる。これを
-<strong>独立性スコア（independency score）</strong> と呼ぶ。</p>
+<strong>相互独立度（mutual independency）</strong> と呼ぶ。</p>
 <p>以降、ここで定義した<span
 class="math inline">\(\phi\)</span>に基づき、具体的には<span
 class="math inline">\(\phi^{-1}\)</span>を用いて指標を設計していく。</p>
@@ -271,7 +272,7 @@ class="math inline">\(|r|\)</span>には1未満の上限が存在することを
 <p>簡単のため、<span
 class="math inline">\(x,y\)</span>がいずれも離散確率変数であり、<span
 class="math inline">\(y\)</span>は<span
-class="math inline">\(k\)</span>個の異なる値を取り得るとする。このとき関連性スコア<span
+class="math inline">\(k\)</span>個の異なる値を取り得るとする。このとき相互依存度<span
 class="math inline">\(\phi\)</span>は</p>
 <p><span class="math display">\[
 \begin{aligned}
@@ -290,7 +291,7 @@ class="math display">\[
 class="math inline">\(y\)</span>を完全に予測する、すなわち<span
 class="math inline">\(p(y|x)\)</span>が<span
 class="math inline">\(0\)</span>か<span
-class="math inline">\(1\)</span>のいずれかであるとする。この場合の関連性スコアを<span
+class="math inline">\(1\)</span>のいずれかであるとする。この場合の相互依存度を<span
 class="math inline">\(\phi^*_y\)</span>で表し、これが定数となることを示す。</p>
 <p>仮定より<span class="math inline">\(x\)</span>の値ごとに<span
 class="math inline">\(p(y|x)=1\)</span>となる<span
@@ -338,7 +339,7 @@ class="math inline">\(y\)</span>について、 <span class="math display">\[
 class="math inline">\(f(y)&gt;0\)</span>となるよう定義された確率変数<span
 class="math inline">\(y\)</span>について <span class="math display">\[
 \psi_y = E \bigg( \frac{1}{f(y)} \bigg)
-\]</span> を関連性スコアの<span class="math inline">\(y\)</span>に関する
+\]</span> を相互依存度の<span class="math inline">\(y\)</span>に関する
 <strong>予測上限（prediction supremum）</strong> と定義する。</p>
 <h1 id="一般化">一般化</h1>
 <p>以上の議論のもとで、正の周辺分布をもつ一般の確率変数<span
@@ -347,7 +348,7 @@ class="math inline">\(x,y\)</span>について
 class="math display">\[
 s_{xy}=\sqrt{\frac{1-\phi^{-1}}{1-\psi_y^{-1}}}
 \]</span> と定義する。ここで<span
-class="math inline">\(\phi\)</span>は関連性スコア、<span
+class="math inline">\(\phi\)</span>は相互依存度、<span
 class="math inline">\(\psi_y\)</span>は<span
 class="math inline">\(\phi\)</span>の<span
 class="math inline">\(y\)</span>に関する予測上限である。<span
@@ -405,7 +406,7 @@ theory (2nd ed.). Wiley-Interscience.</p>
 <p>[2] A. J. Seber (2003), G. A. F. &amp; Lee. Linear regression
 analysis (2nd ed.). John Wiley &amp; Sons.</p>
 <h1 id="証明">証明</h1>
-<h2 id="app:proof1">関連性スコアの値域</h2>
+<h2 id="app:proof1">相互依存度の値域</h2>
 <p><span class="math inline">\(u(t) = t^{-1}, (t &gt;
 0)\)</span>が下に凸であることから、Jensenの不等式より <span
 class="math display">\[
@@ -438,7 +439,7 @@ class="math inline">\(\log \phi \to \infty\)</span>、すなわち<span
 class="math inline">\(\phi \to \infty\)</span>となる。</p>
 <p>以上から<span class="math inline">\(1 \leq \phi \leq
 \infty\)</span>が示された。</p>
-<h2 id="app:proof2">正規分布における関連性スコア</h2>
+<h2 id="app:proof2">正規分布における相互依存度</h2>
 <p>定義から<span
 class="math inline">\(\phi\)</span>は位置およびスケール変換に対して不変であるため、<span
 class="math inline">\(x,y\)</span>が相関係数<span
