@@ -175,7 +175,7 @@
 <header id="title-block-header">
 <h1 class="title">A generalization of correlation coefficient</h1>
 <p class="author">Ryota Suzuki (Ef-prime, Inc.) suzuki@ef-prime.com</p>
-<p class="date">March 28, 2025 *</p>
+<p class="date">April 06, 2025 *</p>
 </header>
 <p>*First draft uploaded on March 25, 2025</p>
 <h1 id="abstract">Abstract</h1>
@@ -331,7 +331,7 @@ class="math inline">\(k_x,k_y\)</span>と表すことにする。</p>
 <p>以上より、基数<span class="math inline">\(k_y =
 \#\{y:p(y)&gt;0\}\)</span>をもつ確率変数<span
 class="math inline">\(y\)</span>について、 <span class="math display">\[
-\phi_y \leq k_y
+\phi \leq k_y
 \]</span> であることがわかった。また <span class="math display">\[
 \phi^*_y = \sum_{y=1}^k \frac{1}{p(y)}p(y) = E \bigg( \frac{1}{p(y)}
 \bigg)
@@ -341,7 +341,7 @@ class="math inline">\(y\)</span>について <span class="math display">\[
 \psi_y = E \bigg( \frac{1}{f(y)} \bigg)
 \]</span> を相互依存度の<span class="math inline">\(y\)</span>に関する
 <strong>予測上限（prediction supremum）</strong> と定義する。</p>
-<h1 id="一般化">一般化</h1>
+<h1 id="予測スコア">予測スコア</h1>
 <p>以上の議論のもとで、正の周辺分布をもつ一般の確率変数<span
 class="math inline">\(x,y\)</span>について
 <strong>予測スコア（predictability score）</strong> を <span
@@ -378,6 +378,72 @@ class="math inline">\(m\)</span>次元正方行列と定義する。定義より
 class="math inline">\((\mathbf{S})_{ii} = 1\)</span>であり、<span
 class="math inline">\(\mathbf{x}\)</span>が多変量正規分布に従うとき、通常の相関行列の成分を絶対値に置き換えたものと一致する。</p>
 <p>予測スコアの定義は自明とは言い難いが、0から1の値を取るという点で解釈しやすく、相関係数の絶対値に対応するという意味もあるため、実用上も受け入れやすいものと思われる。データ解析での利用においては、値をパーセント表記することも推奨される。これによって直感的でわかりやすい印象を与え、利用者の心理的障壁を取り除く効果が期待できる。</p>
+<h1 id="一般化相関尺度">一般化相関尺度</h1>
+<p>予測スコアは予測の観点における説明変数と被説明変数の非対称性を取り込んでいるが、以下では相関係数のように対称的な特性をもつ指標を設計する。</p>
+<p><strong>一般化相関尺度（generalized correlation measure）</strong>
+を以下で定義する： <span class="math display">\[
+|r|_{xy}=\sqrt{\frac{1-\phi^{-1}}{1-\big(\sqrt{\psi_x\psi_y}\big)^{-1}}}
+\]</span> 定義よりこれは対称的、すなわち<span
+class="math inline">\(|r|_{xy} =
+|r|_{yx}\)</span>である。また以前の議論より<span
+class="math inline">\(\psi = \min\{\psi_x,\psi_y\}\)</span>に対して
+<span class="math display">\[
+1 \leq \phi \leq \psi
+\]</span> であり、また <span class="math display">\[
+\psi \leq \sqrt{\psi_x \psi_y}
+\]</span> であるから、 <span class="math display">\[
+\big(\sqrt{\psi_x\psi_y}\big)^{-1} \leq \psi^{-1} \leq \phi^{-1} \leq 1
+\]</span> となることがわかる。すなわち<span class="math inline">\(0 \leq
+|r|_{xy} \leq 1\)</span>であり、<span class="math inline">\(\psi_x =
+\psi_y\)</span>かつ予測スコアが1となるときに限り、<span
+class="math inline">\(|r|_{xy} = 1\)</span>となる。</p>
+<p>予測スコアと同様に、<span
+class="math inline">\(m\)</span>個の確率変数の組<span
+class="math inline">\(\mathbf{x} = (x_1, x_2, \cdots,
+x_m)\)</span>について、<span
+class="math inline">\(|r|_{xy}\)</span>の代わりに<span
+class="math inline">\(|r|_{ij}\)</span>と表記することにする。このとき
+<strong>一般化相関行列（generalized correlation matrix）</strong> を
+<span class="math display">\[
+(\mathbf{C})_{ij} = |r|_{ij}
+\]</span> なる<span
+class="math inline">\(m\)</span>次元正方行列と定義する。定義より<span
+class="math inline">\((\mathbf{C})_{ij} =
+(\mathbf{C})_{ji}\)</span>、また対角成分は<span
+class="math inline">\((\mathbf{C})_{ii} = 1\)</span>であり、<span
+class="math inline">\(\mathbf{x}\)</span>が多変量正規分布に従うとき、通常の相関行列の成分を絶対値に置き換えたものと一致する。</p>
+<h1 id="一般化非類似度">一般化非類似度</h1>
+<p>一般化相関尺度は<span
+class="math inline">\([0,1]\)</span>に値をとり、<span
+class="math inline">\(x,y\)</span>が独立のとき<span
+class="math inline">\(0\)</span>、定義域の基数が等しくお互いを完全に予測するとき<span
+class="math inline">\(1\)</span>となる。この特性を活かして、
+<strong>一般化非類似度（generalized dissimilarity measure）</strong>
+を以下で定義する： <span class="math display">\[
+d_{xy} = \sqrt{1 - |r|_{xy}^2}
+\]</span> 定義よりこちらも<span
+class="math inline">\([0,1]\)</span>に値をとり、一般化相関尺度とは逆に<span
+class="math inline">\(x,y\)</span>が独立のとき<span
+class="math inline">\(1\)</span>、定義域の基数が等しくお互いを完全に予測するとき<span
+class="math inline">\(0\)</span>となる。また定義より対称性を満たし、<span
+class="math inline">\(d_{xy} = d_{yx}\)</span>である。</p>
+<p><span class="math inline">\(m\)</span>個の確率変数の組<span
+class="math inline">\(\mathbf{x} = (x_1, x_2, \cdots,
+x_m)\)</span>について、<span
+class="math inline">\(d_{xy}\)</span>の代わりに<span
+class="math inline">\(d_{ij}\)</span>と表記することにする。このとき
+<strong>一般化非類似度行列（generalized dissimilarity matrix）</strong>
+を <span class="math display">\[
+(\mathbf{D})_{ij} = d_{ij}
+\]</span> なる<span
+class="math inline">\(m\)</span>次元正方行列と定義する。定義より<span
+class="math inline">\((\mathbf{D})_{ij} =
+(\mathbf{D})_{ji}\)</span>、また対角成分は<span
+class="math inline">\((\mathbf{C})_{ii} = 0\)</span>であり、<span
+class="math inline">\(\mathbf{x}\)</span>が多変量正規分布に従うとき、通常の相関行列の成分<span
+class="math inline">\(\rho_{ij}\)</span>に対して<span
+class="math inline">\(d_{ij} = \sqrt{1 -
+\rho_{ij}^2}\)</span>である。</p>
 <h1 id="今後の方針">今後の方針</h1>
 <p>本稿で定義した指標の推定手法を提案し、数値シミュレーションによって実用性を評価することを予定している。仮説検定および信頼区間の構成法などについても議論したい。</p>
 <h2 id="進捗状況">進捗状況</h2>
@@ -400,6 +466,11 @@ class="math inline">\(x \in \mathbb{R} \cup
 \{\texttt{NA}\}\)</span>という定義が可能になる。</p>
 <p>これは現実のデータ生成過程における構造を明らかにするうえで、大きな役割を果たすことが期待できる。例えば温度計のデータが欠損しているとき、測定対象となる温度が仕様上の測定範囲を超えている、といった状況があるとする。このとき欠損値を平均値で置き換えるといった方法で欠損値を補完してしまうと、きわめて誤った結果に陥ることになる。</p>
 <p>もし「温度計のデータが欠損しているとき、最終製品の不良率が高い」といった関係が見出されれば、上記のような構造を明らかにすることに繋がる。通常の相関係数では欠損値は除外する必要があり、また多重代入法のような手法においても、あくまで他の変数に基づいて情報を補完する形になる。したがって欠損そのものを情報として利用する方法論には、一定の意義があるものと考えられる。</p>
+<h2 id="実装">実装</h2>
+<p>本稿で定義した指標を推定するRパッケージを <a
+href="https://github.com/r-suzuki/mdep"
+class="uri">https://github.com/r-suzuki/mdep</a>
+にて公開している。現時点では上記の離散化を用いた手法を採用しており、今後さらに改良を行う予定である。</p>
 <h1 id="参考文献">参考文献</h1>
 <p>[1] J. A. Cover, T. M. &amp; Thomas (2006). Elements of information
 theory (2nd ed.). Wiley-Interscience.</p>
