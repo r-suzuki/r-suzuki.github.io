@@ -219,42 +219,42 @@ class="math inline">\(p(x),p(y)\)</span>で表す。連続の場合と同様に�
 <p><span class="math inline">\(x\)</span>と<span
 class="math inline">\(y\)</span>の <strong>相互依存度（mutual
 dependency）</strong> を以下で定義する： <span class="math display">\[
-\phi = E \bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)
-\]</span> ここで<span class="math inline">\(1 \leq \phi \leq
+\psi = E \bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)
+\]</span> ここで<span class="math inline">\(1 \le \psi \le
 \infty\)</span>であり（<a href="#app:proof1">証明</a>）、<span
 class="math inline">\(x\)</span>と<span
 class="math inline">\(y\)</span>が独立のとき最小値<span
 class="math inline">\(1\)</span>をとる。</p>
-<p>逆数をとると<span class="math inline">\(0 \leq \phi^{-1} \leq
+<p>逆数をとると<span class="math inline">\(0 \le \psi^{-1} \le
 1\)</span>となり、確率変数間の近さを測る一種の非類似度といえる。これを
 <strong>相互独立度（mutual independency）</strong> と呼ぶ。</p>
 <p>以降、ここで定義した<span
-class="math inline">\(\phi\)</span>に基づき、具体的には<span
-class="math inline">\(\phi^{-1}\)</span>を用いて指標を設計していく。</p>
+class="math inline">\(\psi\)</span>に基づき、具体的には<span
+class="math inline">\(\psi^{-1}\)</span>を用いて指標を設計していく。</p>
 <h1 id="連続の場合">連続の場合</h1>
 <p><span class="math inline">\(x,y\)</span>が相関係数<span
 class="math inline">\(\rho\)</span>をもつ2変量正規分布に従う場合について考える。このとき<span
-class="math inline">\(\phi\)</span>を評価すると、<span
+class="math inline">\(\psi\)</span>を評価すると、<span
 class="math inline">\(-1 &lt; \rho &lt;
 1\)</span>のとき以下が得られる（<a href="#app:proof2">証明</a>）： <span
 class="math display">\[
-\phi = \frac{1}{1-\rho^2}
+\psi = \frac{1}{1-\rho^2}
 \]</span> <span class="math inline">\(\rho^2 \to 1\)</span>のとき<span
-class="math inline">\(\phi \to \infty\)</span>となるので、<span
+class="math inline">\(\psi \to \infty\)</span>となるので、<span
 class="math inline">\(\rho = \pm1\)</span>のとき<span
-class="math inline">\(\phi = \infty\)</span>と定義する。</p>
+class="math inline">\(\psi = \infty\)</span>と定義する。</p>
 <p>この関係に基づき、一般の連続2変量確率分布について値 <span
 class="math display">\[
-|r| = \sqrt{1 - \phi^{-1}}
-\]</span> を定める。ここで<span class="math inline">\(0 \leq |r| \leq
+|r| = \sqrt{1 - \psi^{-1}}
+\]</span> を定める。ここで<span class="math inline">\(0 \le |r| \le
 1\)</span>であり、<span
 class="math inline">\(x,y\)</span>が2変量正規分布に従う場合は相関係数の絶対値<span
 class="math inline">\(|\rho|\)</span>に等しい。</p>
-<p>また<span class="math inline">\(\phi\)</span>の定義から、<span
+<p>また<span class="math inline">\(\psi\)</span>の定義から、<span
 class="math inline">\(x,y\)</span>を変換した確率変数<span
 class="math inline">\(u(x), v(y)\)</span>を考えたとき、変換<span
 class="math inline">\(u,v\)</span>が全単射であれば<span
-class="math inline">\(\phi\)</span>および<span
+class="math inline">\(\psi\)</span>および<span
 class="math inline">\(|r|\)</span>は不変である。これには非零定数の加減乗除、指数変換や対数変換などのスケール変換が含まれる。</p>
 <p>逆に任意の実確率変数<span
 class="math inline">\(x,y\)</span>について、<span
@@ -265,7 +265,7 @@ class="math inline">\(u,v\)</span>があれば、この変換については未�
 <p><span
 class="math inline">\(x,y\)</span>のいずれか、または両方が離散の場合においても、連続分布と同様の方法で
 <span class="math display">\[
-|r| = \sqrt{1 - \phi^{-1}}
+|r| = \sqrt{1 - \psi^{-1}}
 \]</span> を定義することができる。ここで<span
 class="math inline">\(x,y\)</span>のいずれかが有限集合に値をとる離散確率変数である場合、<span
 class="math inline">\(|r|\)</span>には1未満の上限が存在することを示す。</p>
@@ -273,10 +273,10 @@ class="math inline">\(|r|\)</span>には1未満の上限が存在することを
 class="math inline">\(x,y\)</span>がいずれも離散確率変数であり、<span
 class="math inline">\(y\)</span>は<span
 class="math inline">\(k\)</span>個の異なる値を取り得るとする。このとき相互依存度<span
-class="math inline">\(\phi\)</span>は</p>
+class="math inline">\(\psi\)</span>は</p>
 <p><span class="math display">\[
 \begin{aligned}
-\phi &amp;= E\bigg(\frac{p(x,y)}{p(x)p(y)}\bigg) \\
+\psi &amp;= E\bigg(\frac{p(x,y)}{p(x)p(y)}\bigg) \\
 &amp;= \sum_x \sum_{y=1}^k \frac{p(x,y)^2}{p(x)p(y)} \\
 \end{aligned}
 \]</span> と書くことができる。ここで準備として <span
@@ -292,7 +292,7 @@ class="math inline">\(y\)</span>を完全に予測する、すなわち<span
 class="math inline">\(p(y|x)\)</span>が<span
 class="math inline">\(0\)</span>か<span
 class="math inline">\(1\)</span>のいずれかであるとする。この場合の相互依存度を<span
-class="math inline">\(\phi^*_y\)</span>で表し、これが定数となることを示す。</p>
+class="math inline">\(\psi^*_y\)</span>で表し、これが定数となることを示す。</p>
 <p>仮定より<span class="math inline">\(x\)</span>の値ごとに<span
 class="math inline">\(p(y|x)=1\)</span>となる<span
 class="math inline">\(y\)</span>が唯一定まり、このような組み合わせについてのみ<span
@@ -304,7 +304,7 @@ class="math inline">\(p(x,y)\)</span>を合計すると<span
 class="math inline">\(p(y)\)</span>になることから、</p>
 <p><span class="math display">\[
 \begin{aligned}
-\phi^*_y &amp;= \sum_x \sum_{y=1}^k \frac{p(x,y)^2}{p(x)p(y)} \\
+\psi^*_y &amp;= \sum_x \sum_{y=1}^k \frac{p(x,y)^2}{p(x)p(y)} \\
 &amp;= \sum_{y=1}^k \bigg( \sum_x p(y|x) \frac{p(x,y)}{p(y)} \bigg) \\
 &amp;= \sum_{y=1}^k \frac{1}{p(y)}\bigg( \sum_{p(y|x)=1} p(x,y) \bigg)
 \\
@@ -314,55 +314,50 @@ class="math inline">\(p(y)\)</span>になることから、</p>
 \]</span> となり、<span
 class="math inline">\(y\)</span>の定義域の基数<span
 class="math inline">\(k\)</span>と一致する。</p>
-<p>ゆえに<span class="math inline">\(\phi \leq
-k\)</span>であり、したがって<span class="math inline">\(k^{-1} \leq
-\phi^{-1}\)</span>となるから、<span
-class="math inline">\(|r|=\sqrt{1-\phi^{-1}} \leq
-\sqrt{1-k^{-1}}\)</span>であることがわかる。</p>
-<p><span
+<p>ゆえに<span class="math inline">\(\psi \le
+k\)</span>であり、したがって<span class="math inline">\(k^{-1} \le
+\psi^{-1}\)</span>となるから、<span
+class="math inline">\(|r|=\sqrt{1-\psi^{-1}} \le
+\sqrt{1-k^{-1}}\)</span>であることがわかる。<span
 class="math inline">\(y\)</span>が無限集合に値をとる場合についても、<span
-class="math inline">\(k=\infty\)</span>とおけば<span
-class="math inline">\(\sqrt{1-k^{-1}}=1\)</span>となり一般性を失わない。したがって<span
-class="math inline">\(y\)</span>が連続値をとる場合にも同じ表記を用いることができる。</p>
+class="math inline">\(k_y=\infty\)</span>とおけば<span
+class="math inline">\(\sqrt{1-k^{-1}}=1\)</span>となり一般性を失わない。</p>
 <p><span class="math inline">\(y\)</span>から<span
 class="math inline">\(x\)</span>について予測する場合も同様のことが言えるので、以降は<span
 class="math inline">\(k\)</span>に添字をつけて<span
-class="math inline">\(k_x,k_y\)</span>と表すことにする。</p>
-<p>以上より、基数<span class="math inline">\(k_y =
-\#\{y:p(y)&gt;0\}\)</span>をもつ確率変数<span
-class="math inline">\(y\)</span>について、 <span class="math display">\[
-\phi \leq k_y
-\]</span> であることがわかった。また <span class="math display">\[
-\phi^*_y = \sum_{y=1}^k \frac{1}{p(y)}p(y) = E \bigg( \frac{1}{p(y)}
-\bigg)
-\]</span> であったことから、一般に<span
-class="math inline">\(f(y)&gt;0\)</span>となるよう定義された確率変数<span
-class="math inline">\(y\)</span>について <span class="math display">\[
-\psi_y = E \bigg( \frac{1}{f(y)} \bigg)
-\]</span> を相互依存度の<span class="math inline">\(y\)</span>に関する
-<strong>予測上限（prediction supremum）</strong> と定義する。</p>
+class="math inline">\(k_x,k_y\)</span>と表すことにする。このとき上記の議論により
+<span class="math display">\[
+\psi \le \min\{k_x, k_y\}
+\]</span> となる。</p>
 <h1 id="予測スコア">予測スコア</h1>
 <p>以上の議論のもとで、正の周辺分布をもつ一般の確率変数<span
 class="math inline">\(x,y\)</span>について
 <strong>予測スコア（predictability score）</strong> を <span
 class="math display">\[
-s_{xy}=\sqrt{\frac{1-\phi^{-1}}{1-\psi_y^{-1}}}
+s_{xy} = \begin{cases}
+\displaystyle \sqrt{\frac{1-\psi^{-1}}{1-k_y^{-1}}} &amp; (k_y &gt; 1)
+\\[2em]
+1 &amp; (k_y = 1)
+\end{cases}
 \]</span> と定義する。ここで<span
-class="math inline">\(\phi\)</span>は相互依存度、<span
-class="math inline">\(\psi_y\)</span>は<span
-class="math inline">\(\phi\)</span>の<span
-class="math inline">\(y\)</span>に関する予測上限である。<span
-class="math inline">\(0 \leq s_{xy} \leq 1\)</span>であり、<span
+class="math inline">\(\psi\)</span>は相互依存度、<span
+class="math inline">\(k_y\)</span>は<span
+class="math inline">\(y\)</span>の定義域の基数である。<span
+class="math inline">\(0 \le s_{xy} \le 1\)</span>であり、<span
 class="math inline">\(x\)</span>と<span
 class="math inline">\(y\)</span>が独立のとき<span
 class="math inline">\(0\)</span>、<span
 class="math inline">\(x\)</span>が<span
 class="math inline">\(y\)</span>を完全に予測するとき<span
 class="math inline">\(1\)</span>となる。</p>
+<p><span class="math inline">\(k_y = 1\)</span>の場合<span
+class="math inline">\(y\)</span>は定数であり、<span
+class="math inline">\(x\)</span>による条件付けに関わらず常に一点分布となる。したがって<span
+class="math inline">\(s_{xy} = 1\)</span>と定義する。</p>
 <p><span class="math inline">\(y\)</span>の定義域が無限集合の場合は<span
-class="math inline">\(\psi_y = \infty\)</span>となるため、<span
+class="math inline">\(k_y = \infty\)</span>となるため、<span
 class="math inline">\(s_{xy} = |r| =
-\sqrt{1-\phi^{-1}}\)</span>となる。したがって<span
+\sqrt{1-\psi^{-1}}\)</span>となる。したがって<span
 class="math inline">\(x,y\)</span>がともに連続（または加算無限）であれば、<span
 class="math inline">\(s_{xy}\)</span>は予測の方向に関して対称的である。</p>
 <p>また<span class="math inline">\(m\)</span>個の確率変数の組<span
@@ -381,22 +376,27 @@ class="math inline">\(\mathbf{x}\)</span>が多変量正規分布に従うとき
 <h1 id="一般化相関尺度">一般化相関尺度</h1>
 <p>予測スコアは予測の観点における説明変数と被説明変数の非対称性を取り込んでいるが、以下では相関係数のように対称的な特性をもつ指標を設計する。</p>
 <p><strong>一般化相関尺度（generalized correlation measure）</strong>
-を以下で定義する： <span class="math display">\[
-|r|_{xy}=\sqrt{\frac{1-\phi^{-1}}{1-\big(\sqrt{\psi_x\psi_y}\big)^{-1}}}
+または <strong>一般化絶対相関係数（generalized absolute correlation
+coefficient）</strong> を以下で定義する： <span class="math display">\[
+|r|_{xy} = \begin{cases}
+\displaystyle \sqrt{\frac{1-\psi^{-1}}{1-\big(\sqrt{k_xk_y}\big)^{-1}}}
+&amp;(k_x k_y &gt; 1) \\[2em]
+1 &amp; (k_x k_y = 1)
+\end{cases}
 \]</span> 定義よりこれは対称的、すなわち<span
 class="math inline">\(|r|_{xy} =
-|r|_{yx}\)</span>である。また以前の議論より<span
-class="math inline">\(\psi = \min\{\psi_x,\psi_y\}\)</span>に対して
-<span class="math display">\[
-1 \leq \phi \leq \psi
+|r|_{yx}\)</span>である。また以前の議論より<span class="math inline">\(k
+= \min\{k_x,k_y\}\)</span>に対して <span class="math display">\[
+1 \le \psi \le k
 \]</span> であり、また <span class="math display">\[
-\psi \leq \sqrt{\psi_x \psi_y}
+k \le \sqrt{k_x k_y}
 \]</span> であるから、 <span class="math display">\[
-\big(\sqrt{\psi_x\psi_y}\big)^{-1} \leq \psi^{-1} \leq \phi^{-1} \leq 1
-\]</span> となることがわかる。すなわち<span class="math inline">\(0 \leq
-|r|_{xy} \leq 1\)</span>であり、<span class="math inline">\(\psi_x =
-\psi_y\)</span>かつ予測スコアが1となるときに限り、<span
-class="math inline">\(|r|_{xy} = 1\)</span>となる。</p>
+\big(\sqrt{k_xk_y}\big)^{-1} \le k^{-1} \le \psi^{-1} \le 1
+\]</span> となることがわかる。すなわち<span class="math inline">\(0 \le
+|r|_{xy} \le 1\)</span>であり、<span class="math inline">\(k_x =
+k_y\)</span>かつ予測スコアが1となるときに限り、<span
+class="math inline">\(|r|_{xy} = 1\)</span>となる。<span
+class="math inline">\(k_x k_y = 1\)</span>の場合はこれに含まれる。</p>
 <p>予測スコアと同様に、<span
 class="math inline">\(m\)</span>個の確率変数の組<span
 class="math inline">\(\mathbf{x} = (x_1, x_2, \cdots,
@@ -448,11 +448,11 @@ class="math inline">\(d_{ij} = \sqrt{1 -
 <p>本稿で定義した指標の推定手法を提案し、数値シミュレーションによって実用性を評価することを予定している。仮説検定および信頼区間の構成法などについても議論したい。</p>
 <h2 id="進捗状況">進捗状況</h2>
 <p>現時点での進捗について、概略を示しておく。まず数値以外の離散変数、すなわちカテゴリ変数については、分割表に対して<span
-class="math inline">\(\phi\)</span>の推定量<span
-class="math inline">\(\hat{\phi}\)</span>を直接計算することができる。これは経験分布に対するプラグイン推定量とみなすことができ、ブートストラップ法による信頼区間の構成が可能とみている（<span
-class="math inline">\(\phi\)</span>の値域を考慮した変換が必要である可能性があり、目下検討中である）。仮説検定についても、分割表に対する独立性の検定を<span
+class="math inline">\(\psi\)</span>の推定量<span
+class="math inline">\(\hat{\psi}\)</span>を直接計算することができる。これは経験分布に対するプラグイン推定量とみなすことができ、ブートストラップ法による信頼区間の構成が可能とみている（<span
+class="math inline">\(\psi\)</span>の値域を考慮した変換が必要である可能性があり、目下検討中である）。仮説検定についても、分割表に対する独立性の検定を<span
 class="math inline">\(\chi^2\)</span>検定等で行うことができ、これは<span
-class="math inline">\(\phi =
+class="math inline">\(\psi =
 1\)</span>を帰無仮説とした検定に相当する。</p>
 <p>数値変数に関しては、値域を適当に分割して離散化し、上述の離散変数に対する手法を適用することが簡便である。分割には分位点を用い、サンプルサイズに応じて適切な分割数を定めることで、現状において良好な結果が得られている。上述の検定および区間推定についても形式上適用することができ、一定の条件のもとで真の値に収束することが期待できる。</p>
 <p>変数<span
@@ -482,10 +482,10 @@ analysis (2nd ed.). John Wiley &amp; Sons.</p>
 0)\)</span>が下に凸であることから、Jensenの不等式より <span
 class="math display">\[
 \begin{aligned}
-\phi &amp;= E\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg) \\
+\psi &amp;= E\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg) \\
 \notag&amp;=
 \int_x \int_y \bigg(\frac{f(x)f(y)}{f(x,y)}\bigg)^{-1}f(x,y)dxdy \\
-&amp;\geq \bigg(\int_x \int_y \frac{f(x)f(y)}{f(x,y)}f(x,y)
+&amp;\ge \bigg(\int_x \int_y \frac{f(x)f(y)}{f(x,y)}f(x,y)
 dxdy\bigg)^{-1} \\
 &amp;= \bigg(\int_x \int_y f(x)f(y)dxdy\bigg)^{-1} \\
 &amp;= \bigg(\int_x f(x)dx \int_yf(y)dy\bigg)^{-1} \\
@@ -495,9 +495,9 @@ dxdy\bigg)^{-1} \\
 class="math inline">\(x,y\)</span>が独立のとき等号が成り立つ。</p>
 <p>また再びJensenの不等式より</p>
 <p><span class="math display">\[\begin{aligned}
-\log \phi &amp;= \log \Bigg[ E\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg]
+\log \psi &amp;= \log \Bigg[ E\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg]
 \\
-&amp;\geq E\Bigg[\log\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg] \\
+&amp;\ge E\Bigg[\log\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg] \\
 \end{aligned}\]</span></p>
 <p>が成り立つ。ここで右辺は相互情報量であり、2変量正規分布において</p>
 <p><span
@@ -506,13 +506,13 @@ class="math display">\[E\Bigg[\log\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg]
 <p>となる[1]。これは<span class="math inline">\(\rho \to
 \infty\)</span>のとき<span
 class="math inline">\(\infty\)</span>に発散するので、このとき<span
-class="math inline">\(\log \phi \to \infty\)</span>、すなわち<span
-class="math inline">\(\phi \to \infty\)</span>となる。</p>
-<p>以上から<span class="math inline">\(1 \leq \phi \leq
+class="math inline">\(\log \psi \to \infty\)</span>、すなわち<span
+class="math inline">\(\psi \to \infty\)</span>となる。</p>
+<p>以上から<span class="math inline">\(1 \le \psi \le
 \infty\)</span>が示された。</p>
 <h2 id="app:proof2">正規分布における相互依存度</h2>
 <p>定義から<span
-class="math inline">\(\phi\)</span>は位置およびスケール変換に対して不変であるため、<span
+class="math inline">\(\psi\)</span>は位置およびスケール変換に対して不変であるため、<span
 class="math inline">\(x,y\)</span>が相関係数<span
 class="math inline">\(-1 &lt; \rho &lt;
 1\)</span>をもつ2変量標準正規分布<span
