@@ -175,19 +175,23 @@
 <header id="title-block-header">
 <h1 class="title">A generalization of correlation coefficient</h1>
 <p class="author">Ryota Suzuki (Ef-prime, Inc.) suzuki@ef-prime.com</p>
-<p class="date">April 17, 2025 *</p>
+<p class="date">April 19, 2025 *</p>
 </header>
 <p>*First draft uploaded on March 25, 2025</p>
 <h1 id="abstract">Abstract</h1>
-<p>This paper proposes a generalization of the correlation coefficient,
-from the perspective of prediction.</p>
+<p>This paper proposes a generalization of the correlation
+coefficient.</p>
 <p>For pairs of continuous or discrete random variables <span
-class="math inline">\((x,y)\)</span>, the <strong>predictability
-score</strong> takes values in <span
+class="math inline">\((x,y)\)</span>, the <strong>generalized
+correlation measure</strong> takes values in <span
 class="math inline">\([0,1]\)</span> and can capture both linear and
 nonlinear relations.</p>
 <p>When the joint distribution is bivariate normal, it theoretically
 coincides with the absolute value of the correlation coefficient.</p>
+<p>Several other measures are also introduced from relevant
+perspectives, including predictive performance of <span
+class="math inline">\(x\)</span> to <span
+class="math inline">\(y\)</span>.</p>
 <p>This paper presents basic concepts and mainly discusses theoretical
 aspects. The development of estimation methods and numerical experiments
 are currently in progress, and further validation is planned for the
@@ -199,9 +203,11 @@ href="https://github.com/r-suzuki/preprints"
 class="uri">https://github.com/r-suzuki/preprints</a>.</strong></p>
 <h1 id="概要">概要</h1>
 <p>連続または離散の確率変数の組<span
-class="math inline">\((x,y)\)</span>について、相関係数を予測の観点から一般化した指標を提案する。</p>
-<p><strong>予測スコア</strong>は<span
-class="math inline">\([0,1]\)</span>に値をとる実数値で、線形および非線形の関係についても捉えることができる。同時分布が2変量正規分布の場合、相関係数の絶対値と理論的に一致する。</p>
+class="math inline">\((x,y)\)</span>について、相関係数を一般化した指標を提案する。</p>
+<p><strong>一般化相関係数</strong>は<span
+class="math inline">\([0,1]\)</span>に値をとる実数値で、線形および非線形の関係についても捉えることができる。同時分布が2変量正規分布の場合、相関係数の絶対値と理論的に一致する。また<span
+class="math inline">\(x\)</span>から<span
+class="math inline">\(y\)</span>を予測する際の性能といった視点に基づき、関連する他の指標についても導入される。</p>
 <p>本稿では基本的な構想を提示し、理論的考察を中心に議論を展開する。推定手法の開発や数値実験等については現在進行中であり、今後さらなる検証を行う予定である。</p>
 <p><strong>なお本稿は草稿段階であり、今後の進捗に応じて誤りの訂正、用語の変更などが生じる可能性があることに注意されたい。最新版は以下にて公開されている：<a
 href="https://github.com/r-suzuki/preprints"
@@ -220,7 +226,8 @@ class="math inline">\(p(x),p(y)\)</span>で表す。連続の場合と同様に�
 class="math inline">\(y\)</span>の <strong>相互依存度（mutual
 dependency）</strong> を以下で定義する： <span class="math display">\[
 \psi = E \bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)
-\]</span> ここで<span class="math inline">\(1 \le \psi \le
+\]</span> これは相互情報量[1]の定義から対数変換を除いたものである。</p>
+<p>ここで<span class="math inline">\(1 \le \psi \le
 \infty\)</span>であり（<a href="#app:proof1">証明</a>）、<span
 class="math inline">\(x\)</span>と<span
 class="math inline">\(y\)</span>が独立のとき最小値<span
@@ -449,17 +456,16 @@ class="math inline">\(d_{ij} = \sqrt{1 -
 <h2 id="進捗状況">進捗状況</h2>
 <p>現時点での進捗について、概略を示しておく。まず数値以外の離散変数、すなわちカテゴリ変数については、分割表に対して<span
 class="math inline">\(\psi\)</span>の推定量<span
-class="math inline">\(\hat{\psi}\)</span>を直接計算することができる。これは経験分布に対するプラグイン推定量とみなすことができ、ブートストラップ法による信頼区間の構成が可能とみている（<span
-class="math inline">\(\psi\)</span>の値域を考慮した変換が必要である可能性があり、目下検討中である）。仮説検定についても、分割表に対する独立性の検定を<span
+class="math inline">\(\hat{\psi}\)</span>を直接計算することができる。分割表に対する独立性の検定を<span
 class="math inline">\(\chi^2\)</span>検定等で行うことができ、これは<span
 class="math inline">\(\psi =
-1\)</span>を帰無仮説とした検定に相当する。</p>
-<p>数値変数に関しては、値域を適当に分割して離散化し、上述の離散変数に対する手法を適用することが簡便である。分割には分位点を用い、サンプルサイズに応じて適切な分割数を定めることで、現状において良好な結果が得られている。上述の検定および区間推定についても形式上適用することができ、一定の条件のもとで真の値に収束することが期待できる。</p>
+1\)</span>を帰無仮説とした検定に相当する。信頼区間についても、ブートストラップ法を用いるなどして構成することが可能とみている。</p>
+<p>数値変数に関しては、値域を適当に分割して離散化し、上述の離散変数に対する手法を適用することが簡便である。分割には標本分位点を用い、サンプルサイズに応じて適切な分割数を定めることで、現状において良好な結果が得られている。上述の検定および区間推定についても形式上適用することができる。</p>
 <p>変数<span
 class="math inline">\(x,y\)</span>の従う分布が2変量正規分布である、または本稿で示したように、適当な全単射<span
 class="math inline">\(u,v\)</span>に対して<span
 class="math inline">\(u^{-1}(x),
-v^{-1}(y)\)</span>が2変量正規分布に従う場合は、上記の離散化よりも効率的な推定が可能とみられる。ただし現実のデータ解析において、このような仮定が妥当であるかどうかは事前には判定が困難であることが多く、汎用性の意味でも離散化の手法が有力と考えられる。</p>
+v^{-1}(y)\)</span>が2変量正規分布に従う場合は、通常の標本相関係数などを用いることで、上記の離散化よりも効率的な推定が可能とみられる。ただし現実のデータ解析において、このような仮定が妥当であるかどうかは事前には判定が困難であることも多く、汎用性の意味でも離散化の手法は有力と考えられる。</p>
 <p>また離散化の方法を用いることで、数値とカテゴリが混在する変数を分析の対象とすることができる。特に欠損値を「欠損という状態」を表す値として積極的に取り扱うことができる。すなわち欠損値を<span
 class="math inline">\(\texttt{NA}\)</span>で表すことにすると、<span
 class="math inline">\(x \in \mathbb{R} \cup
@@ -492,18 +498,19 @@ dxdy\bigg)^{-1} \\
 &amp;= 1
 \end{aligned}
 \]</span> 定義より明らかに、<span
-class="math inline">\(x,y\)</span>が独立のとき等号が成り立つ。</p>
-<p>また再びJensenの不等式より</p>
-<p><span class="math display">\[\begin{aligned}
+class="math inline">\(x,y\)</span>が独立のとき等号が成り立つ。上記では連続確率変数を想定して記述したが、離散の場合にも同様の結果が得られる。</p>
+<p>また再びJensenの不等式より <span class="math display">\[
+\begin{aligned}
 \log \psi &amp;= \log \Bigg[ E\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg]
 \\
 &amp;\ge E\Bigg[\log\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg] \\
-\end{aligned}\]</span></p>
-<p>が成り立つ。ここで右辺は相互情報量であり、2変量正規分布において</p>
-<p><span
-class="math display">\[E\Bigg[\log\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg]
-= -\frac{1}{2} \log \bigg(1 - \rho^2\bigg)\]</span></p>
-<p>となる[1]。これは<span class="math inline">\(\rho \to
+\end{aligned}
+\]</span>
+が成り立つ。ここで右辺は相互情報量であり、特に2変量正規分布において
+<span class="math display">\[
+E\Bigg[\log\bigg(\frac{f(x,y)}{f(x)f(y)}\bigg)\Bigg] = -\frac{1}{2} \log
+\bigg(1 - \rho^2\bigg)
+\]</span> となる[1]。これは<span class="math inline">\(\rho \to
 \infty\)</span>のとき<span
 class="math inline">\(\infty\)</span>に発散するので、このとき<span
 class="math inline">\(\log \psi \to \infty\)</span>、すなわち<span
