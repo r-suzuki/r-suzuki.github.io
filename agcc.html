@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryota Suzuki">
-<meta name="dcterms.date" content="2025-06-22">
+<meta name="dcterms.date" content="2025-06-25">
 
 <title>A generalization of correlation coefficient</title>
 <style>
@@ -3238,7 +3238,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 22, 2025</p>
+      <p class="date">June 25, 2025</p>
     </div>
   </div>
   
@@ -3277,7 +3277,7 @@ window.Quarto = {
 I(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{f_{X,Y}(X,Y)}{f_X(X)f_Y(Y)} \bigg) \bigg] \\
 &amp;= \iint f_{X,Y}(x,y)\log \bigg( \frac{f_{X,Y}(x,y)}{f_X(x)f_Y(y)} \bigg) dx dy
 \end{align*}
-\]</span> ここで<span class="math inline">\(\mathbb{E}_{P_{X,Y}}\)</span>は同時分布のもとでの期待値を表し、積分範囲は周辺密度がいずれも正となる領域のみとする。</p>
+\]</span> ここで<span class="math inline">\(\mathbb{E}_{P_{X,Y}}\)</span>は同時分布のもとでの期待値を表し、積分範囲は同時密度が正となる領域のみとする。</p>
 <p>本稿では、相互情報量の定義から対数変換を除いた <span class="math display">\[
 \begin{align*}
 \psi(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \bigg[ \frac{f_{X,Y}(X,Y)}{f_X(X)f_Y(Y)} \bigg] \\
@@ -3304,21 +3304,22 @@ I(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{f_{X,Y}(X,Y)}{f_X(X)
 </section>
 <section id="正式な定義" class="level3">
 <h3 class="anchored" data-anchor-id="正式な定義">正式な定義</h3>
-<p>確率変数の組<span class="math inline">\((X,Y)\)</span>が同時分布<span class="math inline">\(P_{X,Y}\)</span>に従い、<span class="math inline">\(X\)</span>の周辺分布を<span class="math inline">\(P_X\)</span>、<span class="math inline">\(Y\)</span>の周辺分布を<span class="math inline">\(P_Y\)</span>とする。周辺分布<span class="math inline">\(P_X\)</span>の支持集合を<span class="math inline">\(\mathcal{S}_X\)</span>、<span class="math inline">\(P_Y\)</span>の支持集合を<span class="math inline">\(\mathcal{S}_Y\)</span>とする。<span class="math inline">\(P_X\)</span>と<span class="math inline">\(P_Y\)</span>の直積分布を<span class="math inline">\(P_X \otimes P_Y\)</span>で表す。</p>
+<p>確率変数の組<span class="math inline">\((X,Y)\)</span>が同時分布<span class="math inline">\(P_{X,Y}\)</span>に従い、その支持集合を<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>とする。<span class="math inline">\(X\)</span>の周辺分布を<span class="math inline">\(P_X\)</span>、その支持集合を<span class="math inline">\(\mathcal{S}_X\)</span>で表し、同様に<span class="math inline">\(Y\)</span>の周辺分布を<span class="math inline">\(P_Y\)</span>、その支持集合を<span class="math inline">\(\mathcal{S}_Y\)</span>とする。<span class="math inline">\(P_X\)</span>と<span class="math inline">\(P_Y\)</span>の直積分布を<span class="math inline">\(P_X \otimes P_Y\)</span>で表す。</p>
 <p>このとき相互情報量は <span class="math display">\[
 I(X;Y) =
 \begin{cases}
 \displaystyle \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{dP_{X,Y}}{d P_X \otimes P_Y} \bigg) \bigg] &amp; (P_{X,Y} \ll P_X \otimes P_Y) \\
 \infty &amp; (\text{otherwise})
 \end{cases}
-\]</span> で定義される。ただし期待値は<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>の範囲でとるものとする。ここで<span class="math inline">\(dP/dQ\)</span>はラドン＝ニコディム微分であり、<span class="math inline">\(P \ll Q\)</span>は<span class="math inline">\(P\)</span>が<span class="math inline">\(Q\)</span>に対して絶対連続であることを示す。</p>
+\]</span> で定義される。ここで<span class="math inline">\(dP/dQ\)</span>はラドン＝ニコディム微分であり、<span class="math inline">\(P \ll Q\)</span>は<span class="math inline">\(P\)</span>が<span class="math inline">\(Q\)</span>に対して絶対連続であることを示す。<span class="math inline">\(\mathbb{E}_{P_{X,Y}}\)</span>は同時分布のもとでの期待値を表し、積分範囲は支持集合<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>のみとする。</p>
 <p>本稿ではこれに基づき、相互依存度を <span class="math display">\[
 \psi(X;Y) :=
 \begin{cases}
 \displaystyle \mathbb{E}_{P_{X,Y}} \bigg[ \frac{dP_{X,Y}}{d P_X \otimes P_Y} \bigg] &amp; (P_{X,Y} \ll P_X \otimes P_Y) \\
 \infty &amp; (\text{otherwise})
 \end{cases}
-\]</span> として定義する。ここでも期待値は<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>の範囲でとるものとし、本稿においては以降も同様とする。文脈から明らかな場合は<span class="math inline">\(\psi(X;Y)\)</span>を単に<span class="math inline">\(\psi\)</span>と略記する。</p>
+\]</span> として定義する。文脈から明らかな場合は、<span class="math inline">\(\psi(X;Y)\)</span>を単に<span class="math inline">\(\psi\)</span>と略記する。</p>
+<p>相互情報量と同様、積分範囲は支持集合<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>とするが、相互依存度については<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>を積分範囲としても等価であることに注意しておく（相互情報量の場合、未定義値<span class="math inline">\(0 \log 0\)</span>の扱いを定める必要が生じる）。</p>
 </section>
 </section>
 <section id="相互依存度の性質" class="level2">
@@ -3328,7 +3329,7 @@ I(X;Y) =
 <p>相互情報量と同様、相互依存度は変数変換に対する不変性をもつ。すなわち<span class="math inline">\(X,Y\)</span>を変換した確率変数<span class="math inline">\(g(X),h(Y)\)</span>を考えたとき、変換<span class="math inline">\(g,h\)</span>が可測同型（全単射かつ写像および逆写像がいずれも可測関数）であれば <span class="math display">\[
 \psi(g(X); h(Y)) = \psi(X; Y)
 \]</span> である。</p>
-<p>確率変数が実数値をとる場合、これは非零定数の加減乗除、指数変換や対数変換などのスケール変換を含む。</p>
+<p>確率変数が実数値をとる場合、これは非零定数の加減乗除、指数変換や対数変換などの連続な単調変換を含む。</p>
 </section>
 <section id="相互依存度の値域" class="level3">
 <h3 class="anchored" data-anchor-id="相互依存度の値域">相互依存度の値域</h3>
