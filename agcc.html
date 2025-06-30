@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryota Suzuki">
-<meta name="dcterms.date" content="2025-06-25">
+<meta name="dcterms.date" content="2025-06-30">
 
 <title>A generalization of correlation coefficient</title>
 <style>
@@ -3238,7 +3238,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 25, 2025</p>
+      <p class="date">June 30, 2025</p>
     </div>
   </div>
   
@@ -3274,7 +3274,7 @@ window.Quarto = {
 <h3 class="anchored" data-anchor-id="導入">導入</h3>
 <p>連続確率変数の組<span class="math inline">\((X,Y)\)</span>が同時分布<span class="math inline">\(P_{X,Y}\)</span>に従い、同時密度関数<span class="math inline">\(f_{X,Y}\)</span>および周辺密度関数<span class="math inline">\(f_X,f_Y\)</span>をもつとする。このとき<strong>相互情報量（mutual information）</strong><span class="citation" data-cites="shannon1948 gray2011">(<a href="#ref-gray2011" role="doc-biblioref">Gray 2011</a>; <a href="#ref-shannon1948" role="doc-biblioref">Shannon 1948</a>)</span>は以下で定義される： <span class="math display">\[
 \begin{align*}
-I(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{f_{X,Y}(X,Y)}{f_X(X)f_Y(Y)} \bigg) \bigg] \\
+I(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \Bigg[ \log \bigg( \frac{f_{X,Y}(X,Y)}{f_X(X)f_Y(Y)} \bigg) \Bigg] \\
 &amp;= \iint f_{X,Y}(x,y)\log \bigg( \frac{f_{X,Y}(x,y)}{f_X(x)f_Y(y)} \bigg) dx dy
 \end{align*}
 \]</span> ここで<span class="math inline">\(\mathbb{E}_{P_{X,Y}}\)</span>は同時分布のもとでの期待値を表し、積分範囲は同時密度が正となる領域のみとする。</p>
@@ -3308,10 +3308,10 @@ I(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{f_{X,Y}(X,Y)}{f_X(X)
 <p>このとき相互情報量は <span class="math display">\[
 I(X;Y) =
 \begin{cases}
-\displaystyle \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{dP_{X,Y}}{d P_X \otimes P_Y} \bigg) \bigg] &amp; (P_{X,Y} \ll P_X \otimes P_Y) \\
+\displaystyle \mathbb{E}_{P_{X,Y}} \Bigg[ \log \bigg( \frac{dP_{X,Y}}{d P_X \otimes P_Y} \bigg) \Bigg] &amp; (P_{X,Y} \ll P_X \otimes P_Y) \\
 \infty &amp; (\text{otherwise})
 \end{cases}
-\]</span> で定義される。ここで<span class="math inline">\(dP/dQ\)</span>はラドン＝ニコディム微分であり、<span class="math inline">\(P \ll Q\)</span>は<span class="math inline">\(P\)</span>が<span class="math inline">\(Q\)</span>に対して絶対連続であることを示す。<span class="math inline">\(\mathbb{E}_{P_{X,Y}}\)</span>は同時分布のもとでの期待値を表し、積分範囲は支持集合<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>のみとする。</p>
+\]</span> で定義される。ここで<span class="math inline">\(dP/dQ\)</span>はラドン＝ニコディム微分であり、<span class="math inline">\(P \ll Q\)</span>は<span class="math inline">\(P\)</span>が<span class="math inline">\(Q\)</span>に対して絶対連続であることを示す。<span class="math inline">\(\mathbb{E}_{P_{X,Y}}\)</span>は同時分布のもとでの期待値を表し、積分範囲は支持集合<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>とする。</p>
 <p>本稿ではこれに基づき、相互依存度を <span class="math display">\[
 \psi(X;Y) :=
 \begin{cases}
@@ -3319,7 +3319,7 @@ I(X;Y) =
 \infty &amp; (\text{otherwise})
 \end{cases}
 \]</span> として定義する。文脈から明らかな場合は、<span class="math inline">\(\psi(X;Y)\)</span>を単に<span class="math inline">\(\psi\)</span>と略記する。</p>
-<p>相互情報量と同様、積分範囲は支持集合<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>とするが、相互依存度については<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>を積分範囲としても等価であることに注意しておく（相互情報量の場合、未定義値<span class="math inline">\(0 \log 0\)</span>の扱いを定める必要が生じる）。</p>
+<p>相互情報量と同様、積分範囲は支持集合<span class="math inline">\(\mathcal{S}_{X,Y}\)</span>のみとするが、相互依存度については<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>を積分範囲としても等価である。</p>
 </section>
 </section>
 <section id="相互依存度の性質" class="level2">
@@ -3331,8 +3331,8 @@ I(X;Y) =
 \]</span> である。</p>
 <p>確率変数が実数値をとる場合、これは非零定数の加減乗除、指数変換や対数変換などの連続な単調変換を含む。</p>
 </section>
-<section id="相互依存度の値域" class="level3">
-<h3 class="anchored" data-anchor-id="相互依存度の値域">相互依存度の値域</h3>
+<section id="値域" class="level3">
+<h3 class="anchored" data-anchor-id="値域">値域</h3>
 <p>相互依存度は<span class="math inline">\(1 \le \psi \le \infty\)</span>の範囲に値をとり（<a href="#app:psi-bound">証明</a>）、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき最小値<span class="math inline">\(1\)</span>をとる。逆数をとると<span class="math inline">\(0 \le \psi^{-1} \le 1\)</span>となり、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき最大値<span class="math inline">\(1\)</span>をとる。</p>
 <p><span class="math inline">\(X\)</span>または<span class="math inline">\(Y\)</span>のいずれかが有限離散確率変数の場合、<span class="math inline">\(\psi\)</span>は有限の最大値をもつ。いま確率変数<span class="math inline">\(X\)</span>の基数<span class="math inline">\(k_X\)</span>を以下のように定める： <span class="math display">\[
 k_X := \begin{cases}
@@ -3446,7 +3446,7 @@ d(X,Y) &amp;:= \sqrt{1 - \mathrm{gCor}(X,Y)^2} \\[1em]
 </section>
 <section id="実装" class="level3">
 <h3 class="anchored" data-anchor-id="実装">実装</h3>
-<p>本稿で定義した指標を推定するRパッケージを <a href="https://github.com/r-suzuki/mudep" class="uri">https://github.com/r-suzuki/mudep</a> にて公開している。現時点では上記の離散化を用いた手法を採用しており、今後さらに改良を行う予定である。</p>
+<p>本稿で定義した指標を推定するRパッケージを <a href="https://github.com/r-suzuki/mdep" class="uri">https://github.com/r-suzuki/mdep</a> にて公開している。現時点では上記の離散化を用いた手法を採用しており、今後さらに改良を行う予定である。</p>
 </section>
 </section>
 <section id="references" class="level1">
@@ -3477,32 +3477,74 @@ Shannon, C. E. (1948), <span>“A mathematical theory of communication,”</span
 <section id="補足" class="level2">
 <h2 class="anchored" data-anchor-id="補足">補足</h2>
 <section id="app:f-divergence" class="level3">
-<h3 class="anchored" data-anchor-id="app:f-divergence"><span class="math inline">\(f\)</span>ダイバージェンスに基づく整理</h3>
-<p><span class="math inline">\(f\)</span>ダイバージェンス<span class="citation" data-cites="csiszar1967 polyanskiy2025">(<a href="#ref-csiszar1967" role="doc-biblioref">Csiszár 1967</a>; <a href="#ref-polyanskiy2025" role="doc-biblioref">Polyanskiy and Wu 2025</a>)</span>を用いることで、相互情報量と相互依存度の関係を整理することができる。</p>
-<p>確率分布<span class="math inline">\(P,Q\)</span>について、Kullback-Leibler（KL）ダイバージェンスおよび<span class="math inline">\(\chi^2\)</span>ダイバージェンスは以下のように表すことができる：</p>
-<p><span class="math display">\[\begin{align*}
+<h3 class="anchored" data-anchor-id="app:f-divergence"><span class="math inline">\(f\)</span>ダイバージェンスによる整理</h3>
+<p>相互情報量と相互依存度の関係を<span class="math inline">\(f\)</span>ダイバージェンス<span class="citation" data-cites="csiszar1967 polyanskiy2025">(<a href="#ref-csiszar1967" role="doc-biblioref">Csiszár 1967</a>; <a href="#ref-polyanskiy2025" role="doc-biblioref">Polyanskiy and Wu 2025</a>)</span>を用いて整理することができる。</p>
+<section id="klダイバージェンスと相互情報量" class="level4">
+<h4 class="anchored" data-anchor-id="klダイバージェンスと相互情報量">KLダイバージェンスと相互情報量</h4>
+<p>確率分布<span class="math inline">\(P,Q\)</span>について、Kullback-Leibler（KL）ダイバージェンスは以下で定義される： <span class="math display">\[
+\begin{align*}
 D_{\rm KL}(P \Vert Q) &amp;=
 \begin{cases}
-\displaystyle \int \log \bigg(\frac{dP}{dQ}\bigg) dP &amp; (P \ll Q) \\
-\infty &amp; (\rm{otherwise})
-\end{cases} \\
-
+\displaystyle \mathbb{E}_Q \Bigg[ \frac{dP}{dQ} \log \bigg(\frac{dP}{dQ}\bigg) \Bigg] &amp; (P \ll Q) \\
+\infty &amp; (\text{otherwise})
+\end{cases}
+\end{align*}
+\]</span> ただし未定義値について<span class="math inline">\(0 \log 0 = 0\)</span>と規約する。相互情報量はKLダイバージェンスを用いて <span class="math display">\[
+I(X;Y) = D_{\rm KL}(P_{X,Y} \Vert P_X \otimes P_Y)
+\]</span> として定義される。ここで <span class="math display">\[
+\begin{align*}
+\mathbb{E}_Q \Bigg[ \frac{dP}{dQ} \log \bigg(\frac{dP}{dQ}\bigg) \Bigg] &amp;= \int \log \bigg(\frac{dP}{dQ}\bigg) dP \\
+&amp;= \mathbb{E}_P \Bigg[ \log \bigg(\frac{dP}{dQ}\bigg) \Bigg]
+\end{align*}
+\]</span> であるから、 <span class="math display">\[
+\begin{align*}
+I(X;Y) &amp;= D_{\rm KL} (P_{X,Y} \Vert P_X \otimes P_Y) \\
+&amp;= \begin{cases}
+\displaystyle \mathbb{E}_{P_{X,Y}} \Bigg[ \log \bigg(\frac{dP_{X,Y}}{dP_X \otimes P_Y}\bigg) \Bigg] &amp; (P_{X,Y} \ll P_X \otimes P_Y) \\
+\infty &amp; (\text{otherwise})
+\end{cases}
+\end{align*}
+\]</span> となり、前出の定義と一致することが確認できる。</p>
+</section>
+<section id="chi2ダイバージェンスと相互依存度" class="level4">
+<h4 class="anchored" data-anchor-id="chi2ダイバージェンスと相互依存度"><span class="math inline">\(\chi^2\)</span>ダイバージェンスと相互依存度</h4>
+<p><span class="math inline">\(f\)</span>ダイバージェンスは<span class="math inline">\(f(1) = 0\)</span>を満たす凸関数<span class="math inline">\(f: (0,\infty) \to \mathbb{R}\)</span>の期待値 <span class="math display">\[
+\mathbb{E}_Q \Bigg[ f \bigg(\frac{dP}{dQ}\bigg) \Bigg]
+\]</span> を用いて定義される。KLダイバージェンスは<span class="math inline">\(f(x) = x \log x\)</span>の場合に対応する。</p>
+<p><span class="math inline">\(f(x) = (x - 1)^2\)</span>を用いたものは<span class="math inline">\(\chi^2\)</span>ダイバージェンスと呼ばれ、以下で定義される： <span class="math display">\[
+\begin{align*}
 D_{\chi^2}(P \Vert Q) &amp;=
 \begin{cases}
-\displaystyle \int \frac{dP^2}{dQ} - 1 &amp; (P \ll Q) \\
-\infty &amp; (\rm{otherwise})
+\displaystyle \mathbb{E}_Q \Bigg[ \bigg( \frac{dP}{dQ} - 1 \bigg)^2 \Bigg] &amp; (P \ll Q) \\
+\infty &amp; (\text{otherwise})
 \end{cases}
-\end{align*}\]</span></p>
-<p>ここで<span class="math inline">\(dP/dQ\)</span>はラドン＝ニコディム微分であり、<span class="math inline">\(P \ll Q\)</span>は<span class="math inline">\(P\)</span>が<span class="math inline">\(Q\)</span>に対して絶対連続であることを示す。</p>
-<p>相互情報量は、同時分布と周辺分布の積のKullback-Leibler（KL）ダイバージェンス <span class="math display">\[
-I(X;Y) = D_{\rm KL}(P_{X,Y} \Vert P_X \otimes P_Y)
-\]</span> として定義される。</p>
-<p>相互依存度は、相互情報量におけるKLダイバージェンスを<span class="math inline">\(\chi^2\)</span>ダイバージェンスに置き換え、定数<span class="math inline">\(1\)</span>を加えた <span class="math display">\[
-\psi(X;Y) = D_{\chi^2} (P_{X,Y} \Vert P_X \otimes P_Y) + 1
-\]</span> として表すことができる。</p>
-<p>そのため相互依存度<span class="math inline">\(\psi\)</span>を定義する代わりに、<span class="math inline">\(\chi^2\)</span>ダイバージェンスによる相互情報量 <span class="math display">\[
+\end{align*}
+\]</span></p>
+<p><span class="math inline">\(\chi^2\)</span>ダイバージェンスに基づく相互情報量は以下で定義される： <span class="math display">\[
 I_{\chi^2}(X;Y) = D_{\chi^2} (P_{X,Y} \Vert P_X \otimes P_Y)
-\]</span> を用いて議論を展開することも考えられる。ただし指標の定義や推定にあたっては<span class="math inline">\(\psi\)</span>およびその逆数が多く現れ、また本来の着想としても「相互依存度から対数変換を除いた、尤度比の期待値に相当する値」であり、直感的にも解釈しやすいものと思われる。以上の理由から、相互依存度<span class="math inline">\(\psi\)</span>を明示的に定義することとした。</p>
+\]</span></p>
+<p>ここで <span class="math display">\[
+\begin{align*}
+\mathbb{E}_Q \Bigg[ \bigg( \frac{dP}{dQ} - 1 \bigg)^2 \Bigg] &amp;= \int \frac{dP}{dQ}dP - 1 \\
+&amp;= \mathbb{E}_P \bigg[ \frac{dP}{dQ}\bigg] - 1
+\end{align*}
+\]</span> であるから、<span class="math inline">\(\chi^2\)</span>ダイバージェンスに基づく相互情報量は <span class="math display">\[
+\begin{align*}
+I_{\chi^2}(X;Y) &amp;= D_{\chi^2} (P_{X,Y} \Vert P_X \otimes P_Y) \\
+&amp;= \begin{cases}
+\displaystyle \mathbb{E}_{P_{X,Y}} \bigg[ \frac{dP_{X,Y}}{dP_X \otimes P_Y}\bigg] - 1 &amp; (P_{X,Y} \ll P_X \otimes P_Y)\\
+\infty &amp; (\text{otherwise})
+\end{cases}
+\end{align*}
+\]</span> と表すことができる。</p>
+<p>したがって、相互依存度は<span class="math inline">\(\chi^2\)</span>ダイバージェンスを用いて <span class="math display">\[
+\begin{align*}
+\psi(X;Y) &amp;= I_{\chi^2}(X;Y) + 1 \\
+&amp;= D_{\chi^2} (P_{X,Y} \Vert P_X \otimes P_Y) + 1
+\end{align*}
+\]</span> と表すことができる。</p>
+<p>したがって本稿における議論は、相互依存度<span class="math inline">\(\psi(X;Y)\)</span>を定義する代わりに、<span class="math inline">\(\chi^2\)</span>ダイバージェンスに基づく相互情報量<span class="math inline">\(I_{\chi^2}(X;Y)\)</span>を用いて展開することも可能である。ただし指標の定義や推定にあたっては<span class="math inline">\(\psi\)</span>およびその逆数が多く現れ、また本来の着想としても「相互依存度から対数変換を除いた、尤度比の期待値に相当する値」とするのが直感的にも解釈しやすいものと思われる。以上の理由から、相互依存度<span class="math inline">\(\psi\)</span>を明示的に定義することとした。</p>
+</section>
 </section>
 <section id="app:normalize" class="level3">
 <h3 class="anchored" data-anchor-id="app:normalize">指標の基準化について</h3>
