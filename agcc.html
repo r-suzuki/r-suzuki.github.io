@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Ryota Suzuki">
-<meta name="dcterms.date" content="2025-06-30">
+<meta name="dcterms.date" content="2025-08-31">
 
 <title>A generalization of correlation coefficient</title>
 <style>
@@ -3238,7 +3238,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 30, 2025</p>
+      <p class="date">August 31, 2025</p>
     </div>
   </div>
   
@@ -3258,7 +3258,7 @@ window.Quarto = {
 <p>When the joint distribution is bivariate normal, it coincides with the absolute value of the correlation coefficient.</p>
 <p>Several other measures are also introduced from relevant perspectives, including predictive performance of <span class="math inline">\(X\)</span> to <span class="math inline">\(Y\)</span>.</p>
 <p>This paper presents basic concepts and mainly discusses theoretical aspects. The development of estimation methods and numerical experiments are currently in progress, and further validation is planned for the future.</p>
-<p><strong>Note that this is a preliminary draft subject to corrections, as well as modifications to the definitions of terminology as further progress is made. The latest version is available at <a href="https://r-suzuki.github.io/preprints/" class="uri">https://r-suzuki.github.io/preprints/</a>.</strong></p>
+<p><strong>Note that this is a preliminary draft subject to corrections, as well as modifications to the definitions of terminology as further progress is made. The latest version is available at <a href="https://r-suzuki.github.io/docs" class="uri">https://r-suzuki.github.io/docs</a> .</strong></p>
 <p><em>The manuscript is currently available only in Japanese. An English version is planned and will be released once finalized. Readers are encouraged to make use of translation services as needed.</em></p>
 </section>
 <section id="概要" class="level2">
@@ -3266,7 +3266,7 @@ window.Quarto = {
 <p>連続または離散の場合を含む任意の確率変数の組<span class="math inline">\((X,Y)\)</span>について、相関係数を一般化した指標を提案する。</p>
 <p><strong>一般化相関尺度</strong>は<span class="math inline">\([0,1]\)</span>に値をとる実数値で、線形および非線形の関係についても捉えることができる。同時分布が2変量正規分布の場合、相関係数の絶対値と一致する。また<span class="math inline">\(X\)</span>から<span class="math inline">\(Y\)</span>を予測する際の性能といった視点に基づき、関連する他の指標についても導入される。</p>
 <p>本稿では基本的な構想を提示し、理論的考察を中心に議論を展開する。推定手法の開発や数値実験等については現在進行中であり、今後さらなる検証を行う予定である。</p>
-<p><strong>なお本稿は草稿段階であり、今後の進捗に応じて誤りの訂正、用語の変更などが生じる可能性があることに注意されたい。最新版は以下にて公開されている：<a href="https://r-suzuki.github.io/preprints/" class="uri">https://r-suzuki.github.io/preprints/</a></strong></p>
+<p><strong>なお本稿は草稿段階であり、今後の進捗に応じて誤りの訂正、用語の変更などが生じる可能性があることに注意されたい。最新版は以下にて公開されている：<a href="https://r-suzuki.github.io/docs" class="uri">https://r-suzuki.github.io/docs</a></strong></p>
 </section>
 <section id="相互依存度の定義" class="level2">
 <h2 class="anchored" data-anchor-id="相互依存度の定義">相互依存度の定義</h2>
@@ -3301,6 +3301,11 @@ I(X;Y) &amp;= \mathbb{E}_{P_{X,Y}} \Bigg[ \log \bigg( \frac{f_{X,Y}(X,Y)}{f_X(X)
 <li>確率変数が連続値と離散値のいずれも取り得る場合</li>
 </ul>
 <p>これらの場合についても適切な取り扱いを定めるため、以下に測度論に基づく正式な定義を与える。</p>
+</section>
+<section id="本稿における記法" class="level3">
+<h3 class="anchored" data-anchor-id="本稿における記法">本稿における記法</h3>
+<p>正式な定義を与える前に、本稿における記法を整理しておく。</p>
+<p>「確率変数<span class="math inline">\(X\)</span>が分布<span class="math inline">\(P_X\)</span>に従う」というとき、<span class="math inline">\(P_X\)</span>は確率測度を指すものとする。確率分布関数を<span class="math inline">\(F_X\)</span>、確率密度関数を<span class="math inline">\(f_X\)</span>、確率関数を<span class="math inline">\(p_X\)</span>のように表す。分布<span class="math inline">\(P_X\)</span>のもとでの可測関数<span class="math inline">\(g\)</span>の期待値を<span class="math inline">\(\mathbb{E}_{P_X}[g]\)</span>で表す。</p>
 </section>
 <section id="正式な定義" class="level3">
 <h3 class="anchored" data-anchor-id="正式な定義">正式な定義</h3>
@@ -3350,11 +3355,11 @@ k_X := \begin{cases}
 </section>
 <section id="関連性の評価" class="level2">
 <h2 class="anchored" data-anchor-id="関連性の評価">関連性の評価</h2>
-<p><span class="math inline">\(X\)</span>による<span class="math inline">\(Y\)</span>の条件付き分布が一点分布となる場合、「<span class="math inline">\(X\)</span>は<span class="math inline">\(Y\)</span>を<strong>完全に予測する</strong>」ということにする。<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>がともに離散確率変数であれば、<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>において<span class="math inline">\(p_{Y|X}(y|x) \in \{0, 1\}\)</span>である。より一般には、全射をなす可測関数<span class="math inline">\(g: \mathcal{S}_X \to \mathcal{S}_Y\)</span>が存在し、<span class="math inline">\(P(Y = g(X)) = 1\)</span>が成り立つことに対応する。</p>
-<p>相互依存度<span class="math inline">\(\psi(X;Y)\)</span>は確率変数<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき最小値<span class="math inline">\(1\)</span>をとり、一方が他方を「完全に予測」する場合に最大値をとる：</p>
+<p><span class="math inline">\(X\)</span>による<span class="math inline">\(Y\)</span>の条件付き分布が一点分布となる場合、<span class="math inline">\(Y\)</span>は<span class="math inline">\(X\)</span>に<strong>完全従属する</strong>という<span class="citation" data-cites="lancaster1963">(<a href="#ref-lancaster1963" role="doc-biblioref">Lancaster 1963</a>)</span>。<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>がともに離散確率変数であれば、<span class="math inline">\(\mathcal{S}_X \times \mathcal{S}_Y\)</span>において<span class="math inline">\(p_{Y|X}(y|x) \in \{0, 1\}\)</span>である。より一般には、全射をなす可測関数<span class="math inline">\(g: \mathcal{S}_X \to \mathcal{S}_Y\)</span>が存在し、<span class="math inline">\(P(Y = g(X)) = 1\)</span>が成り立つことに対応する。</p>
+<p>相互依存度<span class="math inline">\(\psi(X;Y)\)</span>は確率変数<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき最小値<span class="math inline">\(1\)</span>をとり、一方が他方に完全従属する場合に最大値をとる：</p>
 <ul>
-<li><span class="math inline">\(Y\)</span>を離散確率変数とする。<span class="math inline">\(X\)</span>が<span class="math inline">\(Y\)</span>を完全に予測するとき、相互依存度は最大値<span class="math inline">\(k_Y\)</span>をとる。このとき<span class="math inline">\(k_X \ge k_Y\)</span>であり、<span class="math inline">\(k_Y = \min \{k_X, k_Y \} = \max \psi(X;Y)\)</span>である（<a href="#app:psi-max">証明</a>）。</li>
-<li><span class="math inline">\(Y\)</span>を連続確率変数とする。<span class="math inline">\(X\)</span>が<span class="math inline">\(Y\)</span>を完全に予測するとき、全射<span class="math inline">\(g: \mathcal{S}_X \to \mathcal{S}_Y\)</span>が存在することから、<span class="math inline">\(X\)</span>もまた連続確率変数である。このとき<span class="math inline">\(P_{X,Y} \not\ll P_X \otimes P_Y\)</span>であるから、定義より<span class="math inline">\(\psi = \infty\)</span>となり最大値をとる。逆数については最小値<span class="math inline">\(\psi^{-1} = 0\)</span>が得られる。</li>
+<li><span class="math inline">\(Y\)</span>を離散確率変数とする。<span class="math inline">\(Y\)</span>が<span class="math inline">\(X\)</span>に完全従属するとき、相互依存度は最大値<span class="math inline">\(k_Y\)</span>をとる。このとき<span class="math inline">\(k_X \ge k_Y\)</span>であり、<span class="math inline">\(k_Y = \min \{k_X, k_Y \} = \max \psi(X;Y)\)</span>である（<a href="#app:psi-max">証明</a>）。</li>
+<li><span class="math inline">\(Y\)</span>を連続確率変数とする。<span class="math inline">\(Y\)</span>が<span class="math inline">\(X\)</span>に完全従属するとき、全射<span class="math inline">\(g: \mathcal{S}_X \to \mathcal{S}_Y\)</span>が存在することから、<span class="math inline">\(X\)</span>もまた連続確率変数である。このとき<span class="math inline">\(P_{X,Y} \not\ll P_X \otimes P_Y\)</span>であるから、定義より<span class="math inline">\(\psi = \infty\)</span>となり最大値をとる。逆数については最小値<span class="math inline">\(\psi^{-1} = 0\)</span>が得られる。</li>
 </ul>
 <p>このような性質から、相互依存度を用いて確率変数間の近さを測る尺度を定めることができる。特に逆数をとると <span class="math display">\[
 0 \le \frac{1}{\min \{k_X, k_Y \}} \le \psi^{-1} \le 1
@@ -3382,7 +3387,7 @@ k_X := \begin{cases}
 \displaystyle \sqrt{\frac{1-\psi^{-1}}{1-k_Y^{-1}}} &amp; (k_Y &gt; 1) \\[2em]
 1 &amp; (k_Y = 1)
 \end{cases}
-\]</span> と定義する。ここで<span class="math inline">\(\psi\)</span>は相互依存度<span class="math inline">\(\psi(X;Y)\)</span>、<span class="math inline">\(k_Y\)</span>は<span class="math inline">\(Y\)</span>の基数である。<span class="math inline">\(0 \le \mathrm{Pred}(X \to Y) \le 1\)</span>であり、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき<span class="math inline">\(0\)</span>、<span class="math inline">\(X\)</span>が<span class="math inline">\(Y\)</span>を「完全に予測」するとき<span class="math inline">\(1\)</span>となる。</p>
+\]</span> と定義する。ここで<span class="math inline">\(\psi\)</span>は相互依存度<span class="math inline">\(\psi(X;Y)\)</span>、<span class="math inline">\(k_Y\)</span>は<span class="math inline">\(Y\)</span>の基数である。<span class="math inline">\(0 \le \mathrm{Pred}(X \to Y) \le 1\)</span>であり、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき<span class="math inline">\(0\)</span>、<span class="math inline">\(Y\)</span>が<span class="math inline">\(X\)</span>に完全従属するとき<span class="math inline">\(1\)</span>となる。</p>
 <p><span class="math inline">\(k_Y = 1\)</span>の場合<span class="math inline">\(Y\)</span>は定数であり、<span class="math inline">\(X\)</span>による条件付けに関わらず常に一点分布となる。したがって<span class="math inline">\(\mathrm{Pred}(X \to Y) = 1\)</span>と定義する。</p>
 <p><span class="math inline">\(Y\)</span>の値域が無限集合の場合は<span class="math inline">\(k_Y = \infty\)</span>となるため、<span class="math inline">\(\mathrm{Pred}(X \to Y) = \sqrt{1-\psi^{-1}}\)</span>となる。したがって<span class="math inline">\(X,Y\)</span>がともに連続（または可算無限）であれば、<span class="math inline">\(\mathrm{Pred}(X \to Y)\)</span>は予測の方向に関して対称的である。</p>
 <p>また<span class="math inline">\(m\)</span>個の確率変数の組<span class="math inline">\(\mathbf{X} = (X_1, X_2, \cdots, X_m)\)</span>について、 <strong>予測スコア行列（predictability matrix）</strong> を <span class="math display">\[
@@ -3405,14 +3410,14 @@ k_X := \begin{cases}
 k_{\min} \le \sqrt{k_X k_Y}
 \]</span> であるから、 <span class="math display">\[
 \big(\sqrt{k_Xk_Y}\big)^{-1} \le k_{\min}^{-1} \le \psi^{-1} \le 1
-\]</span> となることがわかる。すなわち<span class="math inline">\(0 \le \mathrm{gCor}(X,Y) \le 1\)</span>であり、<span class="math inline">\(k_X = k_Y\)</span>かつ予測スコアが<span class="math inline">\(1\)</span>のとき<span class="math inline">\(\mathrm{gCor}(X,Y) = 1\)</span>となる。これは<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が互いに「完全に予測する」状態であり、両者が定数（すなわち<span class="math inline">\(k_X k_Y = 1\)</span>）の場合も含まれる。</p>
+\]</span> となることがわかる。すなわち<span class="math inline">\(0 \le \mathrm{gCor}(X,Y) \le 1\)</span>であり、<span class="math inline">\(k_X = k_Y\)</span>かつ予測スコアが<span class="math inline">\(1\)</span>のとき<span class="math inline">\(\mathrm{gCor}(X,Y) = 1\)</span>となる。これは<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が相互に完全従属する状態であり、両者が定数（すなわち<span class="math inline">\(k_X k_Y = 1\)</span>）の場合も含まれる。</p>
 <p>予測スコアと同様に、<span class="math inline">\(m\)</span>個の確率変数の組<span class="math inline">\(\mathbf{X} = (X_1, X_2, \cdots, X_m)\)</span>について、このとき <strong>一般化相関行列（generalized correlation matrix）</strong> を <span class="math display">\[
 (\mathbf{C})_{ij} = \mathrm{gCor}(X_i,X_j)
 \]</span> なる<span class="math inline">\(m\)</span>次元正方行列と定義する。定義より<span class="math inline">\((\mathbf{C})_{ij} = (\mathbf{C})_{ji}\)</span>となる対称行列で、また対角成分は<span class="math inline">\((\mathbf{C})_{ii} = 1\)</span>であり、<span class="math inline">\(\mathbf{X}\)</span>が多変量正規分布に従うとき、通常の相関行列の成分を絶対値に置き換えたものと一致する。</p>
 </section>
 <section id="一般化非類似度" class="level3">
 <h3 class="anchored" data-anchor-id="一般化非類似度">一般化非類似度</h3>
-<p>一般化相関尺度は<span class="math inline">\([0,1]\)</span>に値をとり、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき<span class="math inline">\(0\)</span>、互いを完全に予測するとき<span class="math inline">\(1\)</span>となる。この特性を活かして、 <strong>一般化非類似度（generalized dissimilarity measure）</strong> を以下で定義する： <span class="math display">\[
+<p>一般化相関尺度は<span class="math inline">\([0,1]\)</span>に値をとり、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき<span class="math inline">\(0\)</span>、相互に完全従属するとき<span class="math inline">\(1\)</span>となる。この特性を活かして、 <strong>一般化非類似度（generalized dissimilarity measure）</strong> を以下で定義する： <span class="math display">\[
 \begin{align*}
 d(X,Y) &amp;:= \sqrt{1 - \mathrm{gCor}(X,Y)^2} \\[1em]
 &amp;= \begin{cases}
@@ -3420,7 +3425,7 @@ d(X,Y) &amp;:= \sqrt{1 - \mathrm{gCor}(X,Y)^2} \\[1em]
 0 &amp; (k_X k_Y = 1)
 \end{cases}
 \end{align*}
-\]</span> 定義よりこちらも<span class="math inline">\([0,1]\)</span>に値をとり、一般化相関尺度とは逆に<span class="math inline">\(X,Y\)</span>が独立のとき<span class="math inline">\(1\)</span>、値域の基数が等しく互いを完全に予測するとき<span class="math inline">\(0\)</span>となる。また定義より対称性を満たし、<span class="math inline">\(d(X,Y) = d(Y,X)\)</span>である。</p>
+\]</span> 定義よりこちらも<span class="math inline">\([0,1]\)</span>に値をとり、一般化相関尺度とは逆に<span class="math inline">\(X,Y\)</span>が独立のとき<span class="math inline">\(1\)</span>、値域の基数が等しく相互に完全従属するとき<span class="math inline">\(0\)</span>となる。また定義より対称性を満たし、<span class="math inline">\(d(X,Y) = d(Y,X)\)</span>である。</p>
 <p><span class="math inline">\(m\)</span>個の確率変数の組<span class="math inline">\(\mathbf{X} = (X_1, X_2, \cdots, X_m)\)</span>について、 <strong>一般化非類似度行列（generalized dissimilarity matrix）</strong> を <span class="math display">\[
 (\mathbf{D})_{ij} = d(X_i,X_j)
 \]</span> なる<span class="math inline">\(m\)</span>次元正方行列と定義する。定義より<span class="math inline">\((\mathbf{D})_{ij} = (\mathbf{D})_{ji}\)</span>となる対称行列で、また対角成分は<span class="math inline">\((\mathbf{D})_{ii} = 0\)</span>であり、<span class="math inline">\(\mathbf{X}\)</span>が多変量正規分布に従うとき、通常の相関行列の成分<span class="math inline">\(\rho_{ij}\)</span>に対して<span class="math inline">\(d(X_i,X_j) = \sqrt{1 - \rho_{ij}^2}\)</span>である。</p>
@@ -3446,7 +3451,7 @@ d(X,Y) &amp;:= \sqrt{1 - \mathrm{gCor}(X,Y)^2} \\[1em]
 </section>
 <section id="実装" class="level3">
 <h3 class="anchored" data-anchor-id="実装">実装</h3>
-<p>本稿で定義した指標を推定するRパッケージを <a href="https://github.com/r-suzuki/mdep" class="uri">https://github.com/r-suzuki/mdep</a> にて公開している。現時点では上記の離散化を用いた手法を採用しており、今後さらに改良を行う予定である。</p>
+<p>本稿で定義した指標を推定するRパッケージを <a href="https://github.com/r-suzuki/gcor" class="uri">https://github.com/r-suzuki/gcor</a> にて公開している。現時点では上記の離散化を用いた手法を採用しており、今後さらに改良を行う予定である。</p>
 </section>
 </section>
 <section id="references" class="level1">
@@ -3460,6 +3465,9 @@ Csiszár, I. (1967), <span>“Information-type measures of difference of probabi
 </div>
 <div id="ref-gray2011" class="csl-entry" role="listitem">
 Gray, R. M. (2011), <em><a href="https://ee.stanford.edu/~gray/it.html">Entropy and information theory</a></em>, Springer.
+</div>
+<div id="ref-lancaster1963" class="csl-entry" role="listitem">
+Lancaster, H. O. (1963), <span>“Correlation and complete dependence of random variables,”</span> <em>The Annals of Mathematical Statistics</em>, Institute of Mathematical Statistics, 34, 1315–1321. <a href="https://doi.org/10.1214/aoms/1177703867">https://doi.org/10.1214/aoms/1177703867</a>.
 </div>
 <div id="ref-polyanskiy2025" class="csl-entry" role="listitem">
 Polyanskiy, Y., and Wu, Y. (2025), <em>Information theory: From coding to learning</em>, Cambridge University Press.
@@ -3577,8 +3585,8 @@ I_{\chi^2}(X;Y) &amp;= D_{\chi^2} (P_{X,Y} \Vert P_X \otimes P_Y) \\
 <p><span class="math inline">\(P_{X,Y} \ll P_X \otimes P_Y\)</span>、すなわち<span class="math inline">\(P_{X,Y}\)</span>が<span class="math inline">\(P_X \otimes P_Y\)</span>に対して絶対連続であると仮定する。<span class="math inline">\(P_{X,Y} = P_X \otimes P_Y\)</span>のときも仮定を満たすため、これは<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立である場合を含む。</p>
 <p>このとき相互依存度の対数変換に対してJensenの不等式を適用すると、相互情報量との間に以下の関係が得られる： <span class="math display">\[
 \begin{align*}
-\log \psi(X;Y) &amp;= \log \bigg( \mathbb{E}_{P_{X,Y}}\bigg[ \frac{dP_{X,Y}}{dP_X P_Y} \bigg] \bigg) \\
-&amp;\ge \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{dP_{X,Y}}{dP_X P_Y} \bigg) \bigg] \\
+\log \psi(X;Y) &amp;= \log \bigg( \mathbb{E}_{P_{X,Y}}\bigg[ \frac{dP_{X,Y}}{dP_X \otimes P_Y} \bigg] \bigg) \\
+&amp;\ge \mathbb{E}_{P_{X,Y}} \bigg[ \log \bigg( \frac{dP_{X,Y}}{dP_X \otimes P_Y} \bigg) \bigg] \\
 &amp;= I(X;Y)
 \end{align*}
 \]</span> 相互情報量について<span class="math inline">\(0 \le I(X;Y) \le \infty\)</span>であり、<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立のとき、かつそのときに限って最小値<span class="math inline">\(0\)</span>をとる。</p>
@@ -3714,6 +3722,22 @@ A
 \]</span> が得られる。左辺はまさに相互依存度<span class="math inline">\(\psi\)</span>の定義であるから、 <span class="math display">\[
 \psi = \frac{1}{1-\rho^2}
 \]</span> が示された。</p>
+<section id="app:RN-cond-exp" class="level4">
+<h4 class="anchored" data-anchor-id="app:RN-cond-exp">ラドン＝ニコディム微分の条件付き期待値</h4>
+<p>可測空間<span class="math inline">\((\Omega, \mathcal{F})\)</span>上に確率測度<span class="math inline">\(P, Q\)</span>が定められており、<span class="math inline">\(P \ll Q\)</span>とする。このときラドン＝ニコディム微分 <span class="math display">\[
+g(x) = \frac{dP}{dQ}(x)
+\]</span> が定義され、可測集合<span class="math inline">\(A \in \mathcal{F}\)</span>に対して <span id="eq-P-as-int-Q"><span class="math display">\[
+P(A) = \int_A g(x) Q(dx)
+\tag{1}\]</span></span> を満たす。ここで<span class="math inline">\(Q(A) &gt; 0\)</span>であれば、<span class="math inline">\(Q\)</span>上での<span class="math inline">\(A\)</span>における<span class="math inline">\(g\)</span>の条件付き期待値は <span class="math display">\[
+\begin{align*}
+\mathbb{E}_Q[g(x)|A] &amp;= \int_\Omega g(x) Q(dx|A) \\
+&amp;= \int_\Omega g(x) \frac{Q(dx \cap A)}{Q(A)} \\
+&amp;= \frac{1}{Q(A)} \int_A g(x) Q(dx)
+\end{align*}
+\]</span> となる。ここで式(<a href="#eq-P-as-int-Q" class="quarto-xref">Equation 1</a>)に注意して整理すれば、<span class="math inline">\(Q(A) &gt; 0\)</span>のとき <span class="math display">\[
+\mathbb{E}_Q \bigg[\frac{dP}{dQ}\bigg|A\bigg] = \frac{P(A)}{Q(A)}
+\]</span> が得られる。</p>
+</section>
 </section>
 </section>
 </section>
