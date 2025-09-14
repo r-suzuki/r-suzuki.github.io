@@ -1,4 +1,8 @@
 ### 2025年度　統計関連学会連合大会
+
+非線形な相関関係の評価指標および推定手法
+
+- [概要（PDF）](jfssa2025_abst.pdf)
 - [スライド資料（HTML）](jfssa2025_slide.html)
 - [`gcor`パッケージ](https://github.com/r-suzuki/gcor)
 
