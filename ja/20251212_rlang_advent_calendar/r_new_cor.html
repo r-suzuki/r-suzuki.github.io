@@ -2474,7 +2474,7 @@ y -0.03175413  1.00000000</code></pre>
 <pre><code>[1] 0.5213735</code></pre>
 </div>
 </div>
-<p>Chatterjee相関は0から1の値をとり、このデータにおいては非線形関係を評価できているようです。<code>pvalue = TRUE</code>を指定すれば、独立性の仮説検定を行うことも可能です：</p>
+<p>Chatterjee相関の理論値は0から1の値をとり、このデータにおいては非線形関係を評価できているようです（ただし推定値は負の値をとる場合もあります）。<code>pvalue = TRUE</code>を指定すれば、独立性の仮説検定を行うことも可能です：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># p値の算出</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y, <span class="at">pvalue =</span> <span class="cn">TRUE</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2576,14 +2576,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.231   0.019   0.250 </code></pre>
+  0.234   0.021   0.256 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.855   0.008   0.864 </code></pre>
+  0.881   0.005   0.887 </code></pre>
 </div>
 </div>
 <p>この例では<code>xicor()</code>のほうが高速ですが、行列形式の出力を得る場合は同等または逆転します：</p>
@@ -2591,14 +2591,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.367   0.053   1.420 </code></pre>
+  1.422   0.054   1.485 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.112   0.014   1.127 </code></pre>
+  1.194   0.010   1.209 </code></pre>
 </div>
 </div>
 <p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があるため、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
