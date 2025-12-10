@@ -2410,7 +2410,7 @@ window.Quarto = {
 </blockquote>
 <section id="本稿の構成" class="level3">
 <h3 class="anchored" data-anchor-id="本稿の構成">本稿の構成</h3>
-<p>まず具体例として用いるサンプルデータを概観します。続いてChatterjee相関などを計算するためのRパッケージを紹介し、具体例を用いて算出方法と結果を確認します。最後にさまざまな関連指標を比較してまとめ、参考文献や公式サイトへのリンクを掲載します。</p>
+<p>まず具体例として用いるサンプルデータを概観します。続いてChatterjee相関などを計算するためのRパッケージを紹介し、具体例を用いて算出方法と結果を確認します。最後にさまざまな関連指標を比較してまとめ、参考文献や公式サイトへのリンクを整理します。</p>
 </section>
 </section>
 <section id="サンプルデータ" class="level2">
@@ -2576,14 +2576,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.230   0.020   0.253 </code></pre>
+  0.232   0.018   0.251 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.889   0.009   0.903 </code></pre>
+  0.861   0.012   0.872 </code></pre>
 </div>
 </div>
 <p>この例では<code>xicor()</code>のほうが高速ですが、行列形式の出力を得る場合は同等または逆転します：</p>
@@ -2591,14 +2591,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.410   0.058   1.480 </code></pre>
+  1.373   0.057   1.431 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.158   0.012   1.176 </code></pre>
+  1.109   0.019   1.127 </code></pre>
 </div>
 </div>
 <p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があるため、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
@@ -2875,7 +2875,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <p><strong>Chatterjee相関</strong>は<span class="math inline">\(Y = f(X)\)</span>のような関数関係の検出に強く、予測の方向を加味した評価を与えます。独立性の仮説検定を行うことができ、計算も高速であることから、特に予測の観点に興味がある場面において強力かつ実用的な手法といえそうです。</p>
 <p><strong>分割相関</strong>は独立性からの乖離を評価し、数値だけでなくカテゴリ値にも適用できる統一的な尺度であることが特徴です。計算は比較的高速で、関数関係に限らず幅広い相関パターンを検出することができます。現行の実装に仮説検定は含まれないものの、大規模データにおける探索的解析において役立つことが期待されます。</p>
 <p>比較対象として<strong>標本相関係数</strong>、<strong>MIC</strong>、<strong>距離相関</strong>および<strong>HSIC</strong>についても算出しました。本稿では詳しく触れられませんでしたが、手法によって高く評価されるパターンが異なることが確認できました。あわせて各種の独立性検定についても結果を比較しました。</p>
-<p>非線形相関の世界は奥が深く、目的やデータ型、サンプルサイズなどを考慮して目的に合った手法を選択することが重要と考えられます。本稿が皆様のデータ解析においてお役に立てれば幸いです。</p>
+<p>非線形相関の世界は奥が深く、目的やデータ型、サンプルサイズなどを考慮して手法を選択することが重要と考えられます。本稿が皆様のデータ解析においてお役に立てれば幸いです。</p>
 </section>
 <section id="参考リンク" class="level2">
 <h2 class="anchored" data-anchor-id="参考リンク">参考リンク</h2>
