@@ -2576,14 +2576,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.232   0.022   0.255 </code></pre>
+  0.230   0.020   0.253 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.916   0.010   0.934 </code></pre>
+  0.889   0.009   0.903 </code></pre>
 </div>
 </div>
 <p>この例では<code>xicor()</code>のほうが高速ですが、行列形式の出力を得る場合は同等または逆転します：</p>
@@ -2591,14 +2591,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.412   0.064   1.487 </code></pre>
+  1.410   0.058   1.480 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.175   0.019   1.202 </code></pre>
+  1.158   0.012   1.176 </code></pre>
 </div>
 </div>
 <p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があるため、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
@@ -2664,7 +2664,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>cor(x,y)</code>
+<code>cor(x, y)</code>
 </dd>
 </dl>
 <p>相関係数<span class="math inline">\(\rho = 0.8\)</span>の2次元正規分布である<code>type: /</code>については高い値をとり、真の<span class="math inline">\(\rho\)</span>を精度よく推定できています。それ以外のパターンは0に近い値が算出されました。</p>
@@ -2684,7 +2684,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>XICOR::xicor(x,y)</code>
+<code>XICOR::xicor(x, y)</code>
 </dd>
 </dl>
 <p><code>type: /, U, W</code>については比較的高い値を示しました。関数関係とはいえない<code>X, O</code>は想定通り低く、<code>88</code>についてはほぼ0に近い値が得られています。実際<code>88</code>は<span class="math inline">\(X\)</span>と<span class="math inline">\(Y\)</span>が独立なケースであるため、これについては望ましい結果といえます。</p>
@@ -2704,7 +2704,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>gcor::gcor(x,y)</code>
+<code>gcor::gcor(x, y)</code>
 </dd>
 </dl>
 <p><code>type: 88</code>を除くすべてのケースで比較的高い値が得られました。独立性からの乖離という観点からは、<code>X, O</code>といったパターンも高く評価されることがわかります。</p>
@@ -2725,7 +2725,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>minerva::mine(x,y)$MIC</code>
+<code>minerva::mine(x, y)$MIC</code>
 </dd>
 </dl>
 <p>ここまで本稿では触れてきませんでしたが、同様に非線形相関を検出可能な手法である<strong>MIC (maximal information coefficient)</strong>についても比較してみましょう。<code>type: W</code>が特に高く評価され、<code>/</code>は原著論文にもある通り<span class="math inline">\(\rho^2 = 0.64\)</span>に比較的近い値をとります。<code>U, X, O</code>はそこそこの評価で、<code>88</code>はやや上振れしていますが小さめの値が得られています。</p>
@@ -2745,7 +2745,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>energy::dcor(x,y)</code>
+<code>energy::dcor(x, y)</code>
 </dd>
 </dl>
 <p>同様に<strong>距離相関 (distance correlation)</strong>についても比較してみます。「<span class="math inline">\(X\)</span>軸において近いとき、<span class="math inline">\(Y\)</span>軸でも近い」といった観点から評価するため、Chatterjee相関と同様に関数的な関係を高く評価することが期待されます。</p>
@@ -2768,7 +2768,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>dHSIC::dhsic(x,y)$dHSIC</code>
+<code>dHSIC::dhsic(x, y)$dHSIC</code>
 </dd>
 </dl>
 <p><strong>HSIC (Hilbert-Schmidt independence criterion)</strong>についても試してみましょう。ほかの指標と異なり「0から1の範囲にスケーリングされた指標」ではないものの、カーネル法を用いた独立性検定に関係する指標として利用することができます。</p>
@@ -2789,7 +2789,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>dHSIC::dhsic.test(x,y)$p.value</code>
+<code>dHSIC::dhsic.test(x, y)$p.value</code>
 </dd>
 </dl>
 <p>HSICに基づく解釈しやすい値として、独立性検定の<span class="math inline">\(p\)</span>値を算出してみましょう。値が0.01未満のとき赤、0.05未満のとき黒、0.05以上のとき緑とし、小数点以下2桁で丸めて表示します：</p>
@@ -2831,7 +2831,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>XICOR::xicor(d$x, d$y, pvalue = TRUE)$pval</code>
+<code>XICOR::xicor(x, y, pvalue = TRUE)$pval</code>
 </dd>
 </dl>
 <p>Chatterjee相関についても、<code>xicor()</code>関数に<code>pvalue = TRUE</code>を指定することで独立性検定の<span class="math inline">\(p\)</span>値が得られます：</p>
@@ -2849,7 +2849,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <dl>
 <dt>コード例</dt>
 <dd>
-<code>XICOR::xicor(d$x, d$y, pvalue = TRUE, method = &quot;permutation&quot;)$pval</code>
+<code>XICOR::xicor(x, y, pvalue = TRUE, method = &quot;permutation&quot;)$pval</code>
 </dd>
 </dl>
 <div class="cell">
