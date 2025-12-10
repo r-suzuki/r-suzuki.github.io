@@ -2400,7 +2400,7 @@ window.Quarto = {
 <section id="はじめに" class="level2">
 <h2 class="anchored" data-anchor-id="はじめに">はじめに</h2>
 <blockquote class="blockquote">
-<p>本稿は<a href="https://qiita.com/advent-calendar/2025/rlang" target="_blank">R言語 Advent Calendar 2025</a>に参加させていただいています。現在進行中の研究に関する内容を含み、登録日（2025/12/12）以降も更新される可能性があります。</p>
+<p>本稿は<a href="https://qiita.com/advent-calendar/2025/rlang" target="_blank">R言語 Advent Calendar 2025</a>に参加させていただいています。現在進行中の研究に関する内容を含み、カレンダー登録日（2025/12/12）以降も更新される可能性があります。</p>
 </blockquote>
 <p>先日、<a href="https://qiita.com/Islay_tr/items/dd427ba86ba11bd25626" target="_blank"><strong>「新しい相関係数」について</strong></a>という記事が話題になりました。いわゆる「<strong>Chatterjee相関</strong>」をわかりやすく紹介する記事で、たいへん参考になりました。</p>
 <p>偶然にもその翌日、<a href="https://japanr.connpass.com/event/374714/" target="_blank">Japan.R 2025</a>にて「パッケージ環境の再現ツールと<strong>新しい相関指標</strong>」というタイトルで、筆者が開発している別の「新しい」相関尺度について発表させていただきました。</p>
@@ -2576,14 +2576,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.232   0.018   0.251 </code></pre>
+  0.227   0.015   0.244 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.861   0.012   0.872 </code></pre>
+  0.902   0.009   0.916 </code></pre>
 </div>
 </div>
 <p>この例では<code>xicor()</code>のほうが高速ですが、行列形式の出力を得る場合は同等または逆転します：</p>
@@ -2591,14 +2591,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.373   0.057   1.431 </code></pre>
+  1.389   0.060   1.455 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.109   0.019   1.127 </code></pre>
+  1.155   0.015   1.175 </code></pre>
 </div>
 </div>
 <p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があるため、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
@@ -2642,7 +2642,7 @@ Species         0.7623968   0.6510740    0.8221674   0.8237429 1.0000000</code><
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>iris <span class="sc">%&gt;%</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Speciesを「形式的に」整数に変換</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Species =</span> <span class="fu">as.numeric</span>(Species)) <span class="sc">%&gt;%</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Species =</span> <span class="fu">as.integer</span>(Species)) <span class="sc">%&gt;%</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">xicor</span>()</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             Sepal.Length Sepal.Width Petal.Length Petal.Width Species
