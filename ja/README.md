@@ -9,6 +9,7 @@
 [`pvclust`](https://github.com/shimo-lab/pvclust)
 : 階層型クラスター分析の信頼性評価
 
+
 ## 発表資料
 
 ### Japan.R 2025
@@ -29,6 +30,11 @@
 - [概要](20250910_jfssa2025/jfssa2025_abst.pdf)（PDF）
 - [スライド資料](20250910_jfssa2025/jfssa2025_slide.pdf)（PDF）
 
+
+## その他
+
+### R言語 Advent Calendar 2025
+- [Rで試す「新しい」相関尺度](20251212_rlang_advent_calendar/r_new_cor.html)
 
 \
 [LICENSE](../LICENSE.txt)
