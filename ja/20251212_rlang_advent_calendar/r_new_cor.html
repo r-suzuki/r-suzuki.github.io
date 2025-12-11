@@ -2400,13 +2400,13 @@ window.Quarto = {
 <section id="はじめに" class="level2">
 <h2 class="anchored" data-anchor-id="はじめに">はじめに</h2>
 <blockquote class="blockquote">
-<p>本稿は<a href="https://qiita.com/advent-calendar/2025/rlang" target="_blank">R言語 Advent Calendar 2025</a>に参加させていただいています。現在進行中の研究に関する内容を含み、カレンダー登録日（2025/12/12）以降も更新される可能性があります。</p>
+<p>本稿は<a href="https://qiita.com/advent-calendar/2025/rlang" target="_blank">R言語 Advent Calendar 2025</a>の12日目の記事です。現在進行中の研究に関する内容を含み、カレンダー登録日（2025/12/12）以降も更新される可能性があります。</p>
 </blockquote>
-<p>先日、<a href="https://qiita.com/Islay_tr/items/dd427ba86ba11bd25626" target="_blank"><strong>「新しい相関係数」について</strong></a>という記事が話題になりました。いわゆる「<strong>Chatterjee相関</strong>」をわかりやすく紹介する記事で、たいへん参考になりました。</p>
+<p>先日、<a href="https://qiita.com/Islay_tr/items/dd427ba86ba11bd25626" target="_blank"><strong>「新しい相関係数」について</strong></a>という記事が話題になりました。いわゆる「<strong>Chatterjee相関</strong>」を紹介する記事で、手法の概要がわかりやすくまとまっています。</p>
 <p>偶然にもその翌日、<a href="https://japanr.connpass.com/event/374714/" target="_blank">Japan.R 2025</a>にて「パッケージ環境の再現ツールと<strong>新しい相関指標</strong>」というタイトルで、筆者が開発している別の「新しい」相関尺度について発表させていただきました。</p>
 <p>よい機会ですので、これらの手法をRで利用する方法をご紹介したいと思います。また具体例を用いて値を算出し、MICや距離相関、HSICといった関連指標との比較についても試みます。</p>
 <blockquote class="blockquote">
-<p>⚠️本稿は進行中の研究に関する暫定的な内容を含みます。記載内容はあくまで現時点のもので、将来的に変更の可能性があることにご注意ください（例えば記載のコード例が、そのままでは動かなくなる可能性があります）。</p>
+<p>⚠️本稿は進行中の研究に関する暫定的な内容を含みます。記載内容は現時点のもので、将来的に変更の可能性があることにご注意ください（例えば記載のコード例が、そのままでは動かなくなる可能性があります）。</p>
 </blockquote>
 <section id="本稿の構成" class="level3">
 <h3 class="anchored" data-anchor-id="本稿の構成">本稿の構成</h3>
@@ -2505,7 +2505,7 @@ y 0.09165609 0.9970030</code></pre>
 <li>自分自身との「相関」がぴったり1になるとは限らない</li>
 <li>対称性をもたず、<code>xicor(x,y)</code>と<code>xicor(y,x)</code>は異なる値を取り得る</li>
 </ul>
-<p>Chatterjee相関は、母集団における理論値について「<span class="math inline">\(Y = f(X)\)</span>という関数関係が成り立つとき（またそのときに限り）1」という性質を持ちます。したがって前者については、「理論値は1であることがいえるものの、有限サンプルによる推定値が1となる保証はない」ということのようです。</p>
+<p>Chatterjee相関は、母集団における理論値について「<span class="math inline">\(Y = f(X)\)</span>という関数関係が成り立つとき（またそのときに限り）1」という性質を持つことが示されています。したがって前者については、「理論値は1であることがいえるものの、有限サンプルによる推定値が1となる保証はない」ということのようです。</p>
 <blockquote class="blockquote">
 <p>Chatterjee相関の推定バイアスについては、こちらの記事「<a href="https://zenn.dev/falconnnmmm/articles/4eecd8a5c3253a" target="_blank">新しい相関係数の理論的性質</a>」でも触れられています。</p>
 </blockquote>
@@ -2525,7 +2525,7 @@ y 0.09165609 0.9970030</code></pre>
 <h2 class="anchored" data-anchor-id="gcorパッケージ"><code>gcor</code>パッケージ</h2>
 <p>Rパッケージ<a href="https://github.com/r-suzuki/gcor" target="_blank"><code>gcor</code></a>は、筆者が提案する<strong>分割相関（contingency correlation）</strong>の実装を提供します。</p>
 <blockquote class="blockquote">
-<p>本稿の執筆時点（2025年12月）では手法自体の開発が進行中であり、パッケージについても開発版という位置付けであることにご注意ください。とはいえ手法の設計はおおむね固まりつつあり、計算実験でも実用に耐えうる性能が得られているものと考えています。そこで実際にご利用いただければと考え、早期に開発版を公開するに至りました。</p>
+<p>ご利用にあたっては、本パッケージは開発版であることにご注意ください。本稿の執筆時点（2025年12月）では、手法自体の開発が進行中の段階にあります。ただし計算実験において一定の性能を確認できているため、早期に開発版を公開しています。</p>
 </blockquote>
 <section id="分割相関について" class="level3">
 <h3 class="anchored" data-anchor-id="分割相関について">分割相関について</h3>
@@ -2556,7 +2556,7 @@ y 0.09165609 0.9970030</code></pre>
 <pre><code>[1] 0.613481</code></pre>
 </div>
 </div>
-<p><code>xicor()</code>と同様、こちらも非線形関係を評価できているようです。ただし現状では仮説検定はサポートされておらず、今後の課題のひとつです。</p>
+<p><code>xicor()</code>と同様、こちらも非線形関係を評価できているようです。現状では仮説検定には対応しておらず、今後の課題として検討を進めています。</p>
 <p>引数としてデータフレームを与えると、すべての変数の組み合わせについて値を算出し、行列形式で返すことができます：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># すべての組み合わせを算出し、行列形式で返す</span></span>
@@ -2567,7 +2567,7 @@ x 1.000000 0.613481
 y 0.613481 1.000000</code></pre>
 </div>
 </div>
-<p>こちらは<code>xicor()</code>と異なり、結果は<code>cor()</code>と同様に対称的となります。実は分割相関にも「予測の方向」を加味したバージョンがあるのですが、このデータでは同じ結果を返すため、本稿では省略します。</p>
+<p>こちらは<code>xicor()</code>と異なり、結果は<code>cor()</code>と同様に対称的となります。実は分割相関にも「予測の方向」を加味したバージョンがあるのですが、現状この例では同じ結果を返すこともあり、本稿では省略します。</p>
 </section>
 <section id="計算時間" class="level3">
 <h3 class="anchored" data-anchor-id="計算時間">計算時間</h3>
@@ -2576,14 +2576,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.234   0.021   0.256 </code></pre>
+  0.246   0.024   0.273 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.881   0.005   0.887 </code></pre>
+  0.982   0.013   1.016 </code></pre>
 </div>
 </div>
 <p>この例では<code>xicor()</code>のほうが高速ですが、行列形式の出力を得る場合は同等または逆転します：</p>
@@ -2591,17 +2591,17 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.422   0.054   1.485 </code></pre>
+  1.478   0.070   1.657 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.194   0.010   1.209 </code></pre>
+  1.131   0.021   1.153 </code></pre>
 </div>
 </div>
-<p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があるため、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
+<p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があり、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
 </section>
 <section id="離散データへの適用" class="level3">
 <h3 class="anchored" data-anchor-id="離散データへの適用">離散データへの適用</h3>
@@ -2653,7 +2653,7 @@ Petal.Width     0.5064163   0.3436975    0.6606205   0.9791778  0.8950
 Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></pre>
 </div>
 </div>
-<p><code>factor</code>型における内部表現としての整数が、カテゴリの自然な順序を表す場合（すなわち順序尺度として解釈できる場合）、この方法は有効に働くものと期待されます。ただしタイが多数発生することから乱数を用いた処理が適用され、（乱数シードを設定しなければ）計算のたびに結果が異なる様子もみられました。<code>xicor()</code>をカテゴリ値に対して適用する場合、これらの点に留意することが望ましいと思われます。</p>
+<p><code>factor</code>型における内部表現としての整数が、カテゴリの自然な順序を表す場合（すなわち順序尺度として解釈できる場合）、この方法は有効に働くものと期待されます。ただしタイが多数発生することから乱数を用いた処理が適用されるとみられ、（乱数シードを設定しない限り）計算のたびに結果が異なる様子もみられました。<code>xicor()</code>をカテゴリ値に対して適用する場合、これらの点に留意することが望ましいと思われます。</p>
 </section>
 </section>
 <section id="算出結果の比較" class="level2">
@@ -2912,7 +2912,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <section id="hsic-1" class="level3">
 <h3 class="anchored" data-anchor-id="hsic-1">HSIC</h3>
 <ul>
-<li><a href="https://www.gatsby.ucl.ac.uk/~gretton/papers/GreBouSmoSch05.pdf" target="_blank">Gretton et al. (2005) Measuring statistical dependence with Hilbert-Schmidt norms</a></li>
+<li><a href="https://www.gatsby.ucl.ac.uk/~gretton/papers/GreBouSmoSch05.pdf" target="_blank">Gretton et al. (2005) Measuring Statistical Dependence with Hilbert-Schmidt Norms</a></li>
 <li><a href="https://cran.r-project.org/package=dHSIC" target="_blank"><code>dHSIC</code>パッケージ</a></li>
 </ul>
 </section>
