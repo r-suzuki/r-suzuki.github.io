@@ -1,8 +1,12 @@
-## Rパッケージ
+# 公開資料
 
-[`gcor`](https://github.com/r-suzuki/gcor)
-: 非線形な相関関係の評価指標
+## ソフトウェア
 
+### `gcor`: 非線形な相関関係の評価指標
+- [R](https://github.com/r-suzuki/gcor)
+- [Python](https://r-suzuki.github.io/gcor-py)
+
+### Rパッケージ
 [`dateback`](https://github.com/r-suzuki/dateback)
 : Rパッケージ環境の保存と復元
 
