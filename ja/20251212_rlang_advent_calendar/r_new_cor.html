@@ -2385,7 +2385,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">公開</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">2025年12月11日</p>
+      <p class="date">2026年1月9日</p>
     </div>
   </div>
   
@@ -2401,6 +2401,9 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="はじめに">はじめに</h2>
 <blockquote class="blockquote">
 <p>本稿は<a href="https://qiita.com/advent-calendar/2025/rlang" target="_blank">R言語 Advent Calendar 2025</a>の12日目の記事です。現在進行中の研究に関する内容を含み、カレンダー登録日（2025/12/12）以降も更新される可能性があります。</p>
+<ul>
+<li><code>gcor</code>パッケージのURLを更新（2026/1/9）</li>
+</ul>
 </blockquote>
 <p>先日、<a href="https://qiita.com/Islay_tr/items/dd427ba86ba11bd25626" target="_blank"><strong>「新しい相関係数」について</strong></a>という記事が話題になりました。いわゆる「<strong>Chatterjee相関</strong>」を紹介する記事で、手法の概要がわかりやすくまとまっています。</p>
 <p>偶然にもその翌日、<a href="https://japanr.connpass.com/event/374714/" target="_blank">Japan.R 2025</a>にて「パッケージ環境の再現ツールと<strong>新しい相関指標</strong>」というタイトルで、筆者が開発している別の「新しい」相関尺度について発表させていただきました。</p>
@@ -2523,7 +2526,7 @@ y 0.09165609 0.9970030</code></pre>
 </section>
 <section id="gcorパッケージ" class="level2">
 <h2 class="anchored" data-anchor-id="gcorパッケージ"><code>gcor</code>パッケージ</h2>
-<p>Rパッケージ<a href="https://github.com/r-suzuki/gcor" target="_blank"><code>gcor</code></a>は、筆者が提案する<strong>分割相関（contingency correlation）</strong>の実装を提供します。</p>
+<p>Rパッケージ<a href="https://github.com/r-suzuki/gcor-r" target="_blank"><code>gcor</code></a>は、筆者が提案する<strong>分割相関（contingency correlation）</strong>の実装を提供します。</p>
 <blockquote class="blockquote">
 <p>ご利用にあたっては、本パッケージは開発版であることにご注意ください。本稿の執筆時点（2025年12月）では、手法自体の開発が進行中の段階にあります。ただし計算実験において一定の性能を確認できているため、早期に開発版を公開しています。</p>
 </blockquote>
@@ -2542,10 +2545,10 @@ y 0.09165609 0.9970030</code></pre>
 <h3 class="anchored" data-anchor-id="利用例">利用例</h3>
 <p>では実際のデータに適用してみましょう。<code>gcor</code>パッケージの開発版はGitHubで公開されており、<code>pak</code>パッケージを用いて</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;pak&quot;)</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">&quot;r-suzuki/gcor&quot;</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>pak<span class="sc">::</span><span class="fu">pak</span>(<span class="st">&quot;r-suzuki/gcor-r&quot;</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>とするか、または<code>devtools</code>パッケージを用いてインストールすることができます：</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(&quot;devtools&quot;)</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;r-suzuki/gcor&quot;</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">&quot;r-suzuki/gcor-r&quot;</span>)</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>値の算出には<code>gcor()</code>関数を用います。さっそく試してみましょう：</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gcor)</span>
@@ -2576,14 +2579,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.246   0.024   0.273 </code></pre>
+  0.249   0.021   0.272 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d<span class="sc">$</span>x, d<span class="sc">$</span>y))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  0.982   0.013   1.016 </code></pre>
+  0.947   0.011   0.961 </code></pre>
 </div>
 </div>
 <p>この例では<code>xicor()</code>のほうが高速ですが、行列形式の出力を得る場合は同等または逆転します：</p>
@@ -2591,14 +2594,14 @@ y 0.613481 1.000000</code></pre>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">xicor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.478   0.070   1.657 </code></pre>
+  1.368   0.056   1.425 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">system.time</span>(<span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>) <span class="fu">gcor</span>(d))</span></code><button title="コピー" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   user  system elapsed 
-  1.131   0.021   1.153 </code></pre>
+  1.165   0.019   1.184 </code></pre>
 </div>
 </div>
 <p><code>gcor()</code>では変数の組み合わせごとに1回の計算で済むところ、<code>xicor()</code>では変数の並び（<code>xicor(x,y)</code>と<code>xicor(y,x)</code>で異なる）ごとに計算が必要となります。また<code>gcor()</code>では「自分自身との相関は常に1」といった性質があり、計算対象となる組み合わせそのものが少なくなることが理由として考えられます。</p>
@@ -2892,7 +2895,7 @@ Species         0.4259436   0.2662145    0.6492576   0.6797689  0.9850</code></p
 <h3 class="anchored" data-anchor-id="分割相関-1">分割相関</h3>
 <ul>
 <li><a href="https://r-suzuki.github.io/ja/20251123_rjpusers2025/rjpusers2025_gcor.pdf" target="_blank">R研究集会2025 スライド資料</a></li>
-<li><a href="https://github.com/r-suzuki/gcor" target="_blank"><code>gcor</code>パッケージ</a></li>
+<li><a href="https://github.com/r-suzuki/gcor-r" target="_blank"><code>gcor</code>パッケージ</a></li>
 </ul>
 </section>
 <section id="mic-1" class="level3">
