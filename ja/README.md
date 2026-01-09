@@ -3,7 +3,7 @@
 ## ソフトウェア
 
 ### `gcor`: 非線形な相関関係の評価指標
-- [R](https://github.com/r-suzuki/gcor)
+- [R](https://github.com/r-suzuki/gcor-r)
 - [Python](https://r-suzuki.github.io/gcor-py)
 
 ### Rパッケージ
