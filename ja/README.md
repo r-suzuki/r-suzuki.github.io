@@ -2,15 +2,13 @@
 
 ## ソフトウェア
 
-### `gcor`: 非線形な相関関係の評価指標
-- [R](https://github.com/r-suzuki/gcor-r)
-- [Python](https://r-suzuki.github.io/gcor-py)
+[gcor](../gcor/)
+: 非線形な相関関係の評価指標
 
-### Rパッケージ
-[`dateback`](https://github.com/r-suzuki/dateback)
+[dateback](https://github.com/r-suzuki/dateback)
 : Rパッケージ環境の保存と復元
 
-[`pvclust`](https://github.com/shimo-lab/pvclust)
+[pvclust](https://github.com/shimo-lab/pvclust)
 : 階層型クラスター分析の信頼性評価
 
 
@@ -40,11 +38,11 @@
 ### R言語 Advent Calendar 2025
 - [Rで試す「新しい」相関尺度](20251212_rlang_advent_calendar/r_new_cor.html)
 
-\
-[LICENSE](../LICENSE.txt)
+<br>
 
 ---
 鈴木 了太（株式会社 ef-prime）\
 suzuki@ef-prime.com
 
-All rights reserved.
+All rights reserved.\
+[LICENSE](../LICENSE.txt)
